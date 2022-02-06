@@ -30,10 +30,12 @@
 import { ref, reactive } from 'vue'
 
 export default {
-  setup () {
+  setup (props) {
+    console.log('props: ', props)
     const height = ref(window.innerHeight)
     const submit = () => {
       console.log('submit')
+      this.$router.push({ name: 'home', query: { redirect: '/home' } })
     }
     const form = reactive({
       name: '',
