@@ -1,5 +1,5 @@
 <template>
-  Settings Home
+  Settings Home --> new
 </template>
 <script>
 export default {}
