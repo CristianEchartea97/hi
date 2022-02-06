@@ -1,6 +1,21 @@
 const routes = [
   {
     path: '/',
+    name: 'login',
+    component: () => import('pages/auth/Login.vue')
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: () => import('pages/auth/SignUp.vue')
+  },
+  {
+    path: '/missing-pass',
+    name: 'missingPass',
+    component: () => import('pages/auth/ForgotPass.vue')
+  },
+  {
+    path: '/home',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
