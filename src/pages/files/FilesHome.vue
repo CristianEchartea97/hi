@@ -4,10 +4,11 @@
       <div class="col">
         <q-uploader
           url="http://localhost:4444/upload"
-          label="Select the files to upload"
-          multiple
-          batch
-          style="max-width: 700px;min-width: 700px;"
+          label="Please upload the file"
+          color="amber"
+          text-color="black"
+          no-thumbnails
+          style="max-width: 300px"
         />
       </div>
     </div>
