@@ -29,6 +29,14 @@
                 My Reports
               </q-item-section>
             </q-item>
+            <q-item :to="{ name: 'wizardHome' }" clickable v-ripple exact>
+              <q-item-section avatar>
+                <q-icon name="tips_and_updates"/>
+              </q-item-section>
+              <q-item-section>
+                Wizard
+              </q-item-section>
+            </q-item>
             <q-item :to="{ name: 'filesHome' }" clickable v-ripple exact>
               <q-item-section avatar>
                 <q-icon name="file_upload"/>

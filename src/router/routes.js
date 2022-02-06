@@ -24,6 +24,11 @@ const routes = [
         component: () => import('pages/reports/ReportsHome')
       },
       {
+        path: 'wizard',
+        name: 'wizardHome',
+        component: () => import('pages/wizard/WizardHome')
+      },
+      {
         path: 'my-files',
         name: 'filesHome',
         component: () => import('pages/files/FilesHome')
