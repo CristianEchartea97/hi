@@ -4,7 +4,12 @@
       <q-header elevated class="bg-cyan-8">
         <q-toolbar>
           <q-toolbar-title>OTTO App</q-toolbar-title>
-          <q-btn flat @click="drawer = !drawer" round dense icon="menu"/>
+          <div class="q-pa-md q-gutter-sm">
+            <q-btn dense color="purple" round icon="email" class="q-ml-md">
+              <q-badge color="red" floating>4</q-badge>
+            </q-btn>
+            <q-btn color="white" size="sm" text-color="black" label="LogOut"/>
+          </div>
         </q-toolbar>
       </q-header>
 
