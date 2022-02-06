@@ -5,7 +5,18 @@ const routes = [
     children: [
       {
         path: '',
-        component: () => import('pages/Index.vue')
+        name: 'reportsHome',
+        component: () => import('pages/reports/ReportsHome')
+      },
+      {
+        path: 'my-files',
+        name: 'filesHome',
+        component: () => import('pages/files/FilesHome')
+      },
+      {
+        path: 'my-settings',
+        name: 'settingsHome',
+        component: () => import('pages/settings/SettingsHome')
       }
     ]
   },

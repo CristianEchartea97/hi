@@ -16,7 +16,7 @@
       >
         <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
           <q-list padding>
-            <q-item active clickable v-ripple exact>
+            <q-item :to="{ name: 'reportsHome' }" clickable v-ripple exact>
               <q-item-section avatar>
                 <q-icon name="travel_explore"/>
               </q-item-section>
@@ -24,7 +24,7 @@
                 My Reports
               </q-item-section>
             </q-item>
-            <q-item clickable v-ripple exact>
+            <q-item :to="{ name: 'filesHome' }" clickable v-ripple exact>
               <q-item-section avatar>
                 <q-icon name="file_upload"/>
               </q-item-section>
@@ -32,7 +32,7 @@
                 Upload
               </q-item-section>
             </q-item>
-            <q-item clickable v-ripple>
+            <q-item :to="{ name: 'settingsHome' }" clickable v-ripple exact>
               <q-item-section avatar>
                 <q-icon name="settings"/>
               </q-item-section>
@@ -56,11 +56,7 @@
 
       <q-page-container>
         <q-page padding>
-          <p v-for="n in 15" :key="n">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci,
-            dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus
-            commodi perferendis voluptate?
-          </p>
+          <router-view/>
         </q-page>
       </q-page-container>
     </q-layout>
