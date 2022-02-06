@@ -29,15 +29,6 @@
 
       <q-step
         :name="3"
-        title="Ad template"
-        icon="assignment"
-        disable
-      >
-        This step won't show up because it is disabled.
-      </q-step>
-
-      <q-step
-        :name="4"
         title="Create an ad"
         icon="add_comment"
       >
