@@ -22,6 +22,10 @@
             <q-btn class="q-mt-lg" label="Login" type="submit" lazy-rules
                    color="primary"
             />
+            <q-btn class="q-mt-lg" label="Register" type="submit" lazy-rules
+                   color="accent"
+                   flat @click="doRegister"
+            />
             <div v-if="error">
               <q-dialog v-model="error">
                 <q-card>
@@ -40,10 +44,6 @@
               </q-dialog>
             </div>
           </q-form>
-          <q-btn class="q-mt-lg" label="Register" type="submit" lazy-rules
-                 color="accent"
-                 flat @click="doRegister"
-          />
         </q-page-container>
         <!-- video column-->
         <q-page-container
@@ -74,6 +74,9 @@ let $route
 // eslint-disable-next-line no-unused-vars
 export default {
   name: 'login',
+  mounted () {
+    $route = useRouter()
+  },
   data () {
     return {
       form: {
@@ -112,9 +115,6 @@ export default {
     windowHeight () {
       return window.innerHeight
     }
-  },
-  mounted () {
-    $route = useRouter()
   }
 }
 </script>
