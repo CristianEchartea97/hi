@@ -5,9 +5,7 @@
         <q-toolbar>
           <q-toolbar-title>OTTO App</q-toolbar-title>
           <div class="q-pa-md q-gutter-sm">
-            <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages"
-                   @click="doWea"
-            >
+            <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages" @click="doWea">
               <q-badge color="red" floating>4</q-badge>
               <q-tooltip>
                 You have 4 new messages
@@ -19,6 +17,46 @@
           </div>
         </q-toolbar>
       </q-header>
+      <q-dialog v-model="carousel">
+        <q-carousel
+          transition-prev="slide-right"
+          transition-next="slide-left"
+          swipeable
+          animated
+          v-model="slide"
+          control-color="primary"
+          navigation-icon="radio_button_unchecked"
+          navigation
+          padding
+          height="200px"
+          class="bg-white shadow-1 rounded-borders"
+        >
+          <q-carousel-slide :name="1" class="column no-wrap flex-center">
+            <q-icon name="style" color="primary" size="56px"/>
+            <div class="q-mt-md text-center">
+              {{ lorem }}
+            </div>
+          </q-carousel-slide>
+          <q-carousel-slide :name="2" class="column no-wrap flex-center">
+            <q-icon name="live_tv" color="primary" size="56px"/>
+            <div class="q-mt-md text-center">
+              {{ lorem }}
+            </div>
+          </q-carousel-slide>
+          <q-carousel-slide :name="3" class="column no-wrap flex-center">
+            <q-icon name="layers" color="primary" size="56px"/>
+            <div class="q-mt-md text-center">
+              {{ lorem }}
+            </div>
+          </q-carousel-slide>
+          <q-carousel-slide :name="4" class="column no-wrap flex-center">
+            <q-icon name="terrain" color="primary" size="56px"/>
+            <div class="q-mt-md text-center">
+              {{ lorem }}
+            </div>
+          </q-carousel-slide>
+        </q-carousel>
+      </q-dialog>
 
       <q-drawer
         v-model="drawer"
@@ -98,7 +136,10 @@ export default {
     // const $store = useStore()
     // console.log($store.state.auth.isAuthenticated)
     return {
-      drawer: ref(false)
+      drawer: ref(false),
+      carousel: ref(false),
+      slide: ref(1),
+      lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!'
     }
   },
   methods: {
@@ -114,7 +155,7 @@ export default {
       }
     },
     doWea () {
-      alert('Please check your e-mail, you got 4 messages')
+      this.carousel = true
       console.log('dasdas')
     }
   }
