@@ -15,10 +15,8 @@ export const signOut = ({ commit }) => {
   commit('removeToken')
 }
 
-export const getMe = async ({ commit }, token) => {
-  await api.get('/home', token.access).then(response => {
-    commit('setMe', response.data)
-  })
+export const getMe = async ({ commit }) => {
+  commit('setMe', 'sample data')
 }
 
 export const init = async ({ commit, dispatch }) => {

@@ -97,7 +97,7 @@ export default {
       } else {
         try {
           await this.doLogin(this.form)
-          $route.push('/home')
+          $route.push({ name: 'home' })
         } catch (err) {
           this.error = true
           this.alert = 'error'
@@ -108,7 +108,7 @@ export default {
     },
     doRegister () {
       console.log('in do register')
-      $route.push('/signup')
+      $route.push({ name: 'signup' })
     }
   },
   computed: {
