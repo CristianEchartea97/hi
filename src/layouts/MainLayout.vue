@@ -8,18 +8,13 @@
             <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages"
                    @click="doWea"
             >
+              <q-badge color="red" floating>4</q-badge>
               <q-tooltip>
                 You have 4 new messages
               </q-tooltip>
             </q-btn>
-<!--            <q-btn dense color="purple" round icon="email" class="q-ml-md">-->
-<!--              <q-badge-->
-<!--                color="red"-->
-<!--                floating-->
-<!--                @click="doWea">4</q-badge>-->
-<!--            </q-btn>-->
             <q-btn color="white" size="sm" text-color="black" label="LogOut"
-              @click="logOut"
+                   @click="logOut"
             />
           </div>
         </q-toolbar>
