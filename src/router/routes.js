@@ -7,7 +7,8 @@ const routes = [
   {
     path: '/signup',
     name: 'signup',
-    component: () => import('pages/auth/SignUp.vue')
+    component: () => import('pages/auth/SignUp.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/missing-pass',
@@ -15,8 +16,10 @@ const routes = [
     component: () => import('pages/auth/ForgotPass.vue')
   },
   {
+    name: 'home',
     path: '/home',
     component: () => import('layouts/MainLayout.vue'),
+    meta: { requireLogin: true },
     children: [
       {
         path: '',

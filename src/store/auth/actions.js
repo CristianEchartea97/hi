@@ -10,12 +10,13 @@ export const doLogin = async ({ commit, dispatch }, payload) => {
 }
 
 export const signOut = ({ commit }) => {
+  console.log('dopasfmopdfmbporwtmbs')
   api.defaults.headers.common.Authorization = ''
   commit('removeToken')
 }
 
 export const getMe = async ({ commit }, token) => {
-  await api.get('/api/v1/users/me/', token.access).then(response => {
+  await api.get('/home', token.access).then(response => {
     commit('setMe', response.data)
   })
 }

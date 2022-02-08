@@ -5,10 +5,22 @@
         <q-toolbar>
           <q-toolbar-title>OTTO App</q-toolbar-title>
           <div class="q-pa-md q-gutter-sm">
-            <q-btn dense color="purple" round icon="email" class="q-ml-md">
-              <q-badge color="red" floating>4</q-badge>
+            <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages"
+                   @click="doWea"
+            >
+              <q-tooltip>
+                You have 4 new messages
+              </q-tooltip>
             </q-btn>
-            <q-btn color="white" size="sm" text-color="black" label="LogOut"/>
+<!--            <q-btn dense color="purple" round icon="email" class="q-ml-md">-->
+<!--              <q-badge-->
+<!--                color="red"-->
+<!--                floating-->
+<!--                @click="doWea">4</q-badge>-->
+<!--            </q-btn>-->
+            <q-btn color="white" size="sm" text-color="black" label="LogOut"
+              @click="logOut"
+            />
           </div>
         </q-toolbar>
       </q-header>
@@ -19,7 +31,8 @@
         :width="200"
         :breakpoint="400"
       >
-        <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+        <q-scroll-area
+          style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
           <q-list padding>
             <q-item :to="{ name: 'reportsHome' }" clickable v-ripple exact>
               <q-item-section avatar>
@@ -56,7 +69,9 @@
           </q-list>
         </q-scroll-area>
 
-        <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
+        <q-img class="absolute-top"
+               src="https://cdn.quasar.dev/img/material.png"
+               style="height: 150px">
           <div class="absolute-bottom bg-transparent">
             <q-avatar size="56px" class="q-mb-sm">
               <img src="https://cdn.quasar.dev/img/boy-avatar.png">
@@ -77,11 +92,35 @@
 </template>
 <script>
 import { ref } from 'vue'
+// import { useRouter } from 'vue-router'
+import { mapActions } from 'vuex'
 
 export default {
+
   setup () {
+    // TODO : authenticated --> uncomment if needed
+    // add userStore
+    // const $store = useStore()
+    // console.log($store.state.auth.isAuthenticated)
     return {
       drawer: ref(false)
+    }
+  },
+  methods: {
+    ...mapActions('auth', ['signOut']),
+    logOut () {
+      console.log('signing out')
+      try {
+        const logOut = this.signOut()
+        console.log(logOut)
+        window.location.reload()
+      } catch (err) {
+        alert(err)
+      }
+    },
+    doWea () {
+      alert('Please check your e-mail, you got 4 messages')
+      console.log('dasdas')
     }
   }
 }
