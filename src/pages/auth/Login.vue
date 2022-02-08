@@ -48,7 +48,7 @@
         <!-- video column-->
         <q-page-container
           class="conb col-md-8 video shadow-10 desktop-only overflow-hidden">
-          <q-parallax :height="height">
+          <q-parallax :height="windowHeight">
             <template v-slot:media>
               <video width="1920" height="1080"
                      poster="https://cdn.quasar.dev/img/polina.jpg" autoplay
@@ -69,11 +69,9 @@
 <script>
 import { mapActions } from 'vuex'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
 
 let $route
 // eslint-disable-next-line no-unused-vars
-let heigth
 export default {
   name: 'login',
   data () {
@@ -110,10 +108,13 @@ export default {
       $route.push('/signup')
     }
   },
-
+  computed: {
+    windowHeight () {
+      return window.innerHeight
+    }
+  },
   mounted () {
     $route = useRouter()
-    heigth = ref(window.innerHeight)
   }
 }
 </script>
