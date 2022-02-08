@@ -40,11 +40,9 @@ export default route(function (/* { store, ssrContext } */) {
     if (to.matched.some((record) => record.meta.requireLogin)) {
       if (localStorage.getItem('token')) {
         next()
-        return
       } else {
         next('/')
       }
-      next()
     } else {
       next()
     }

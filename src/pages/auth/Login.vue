@@ -97,7 +97,7 @@ export default {
       } else {
         try {
           await this.doLogin(this.form)
-          $route.push({ name: 'home' })
+          $route.push({ name: 'reportsHome' })
         } catch (err) {
           this.error = true
           this.alert = 'error'
