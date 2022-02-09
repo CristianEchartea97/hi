@@ -27,6 +27,13 @@ const actions = {
       commit('setAuthenticated', true)
       api.defaults.headers.common.Authorization = 'JWT ' + response.data.token
     }
+  },
+  logout ({
+    commit
+  }) {
+    commit('setToken', '')
+    commit('setAuthenticated', false)
+    api.defaults.headers.common.Authorization = ''
   }
 }
 

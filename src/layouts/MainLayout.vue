@@ -125,16 +125,10 @@
 </template>
 <script>
 import { ref } from 'vue'
-// import { useRouter } from 'vue-router'
-import { mapActions } from 'vuex'
 
 export default {
 
   setup () {
-    // TODO : authenticated --> uncomment if needed
-    // add userStore
-    // const $store = useStore()
-    // console.log($store.state.auth.isAuthenticated)
     return {
       drawer: ref(false),
       carousel: ref(false),
@@ -143,13 +137,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions('auth', ['signOut']),
     logOut () {
       console.log('signing out')
       try {
-        const logOut = this.signOut()
-        console.log(logOut)
-        window.location.reload()
+        this.$store.dispatch('xstore/logout')
+        this.$router.push({ name: 'login' })
       } catch (err) {
         alert(err)
       }

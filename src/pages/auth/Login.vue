@@ -67,15 +67,8 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
-
-let $route
-// eslint-disable-next-line no-unused-vars
 export default {
   name: 'login',
-  mounted () {
-    $route = useRouter()
-  },
   data () {
     return {
       form: {
@@ -97,7 +90,7 @@ export default {
           console.log('sending auth')
           await this.$store.dispatch('xstore/login', this.form)
           if (this.$store.getters['xstore/isAuthenticated']) {
-            $route.push({ name: 'reportsHome' })
+            this.$router.push({ name: 'reportsHome' })
           }
         } catch (err) {
           this.error = true
@@ -109,7 +102,7 @@ export default {
     },
     doRegister () {
       console.log('in do register')
-      $route.push({ name: 'signup' })
+      this.$router.push({ name: 'signup' })
     }
   },
   computed: {
