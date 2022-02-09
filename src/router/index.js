@@ -17,7 +17,6 @@ import routes from './routes'
  */
 
 export default route(function ({ store }) {
-  // const $store = useStore()
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory)
@@ -36,6 +35,12 @@ export default route(function ({ store }) {
   })
 
   Router.beforeEach((to, from, next) => {
+    // if the user is already authenticated redirect them to home
+    if (to.matched.some((record) => record.meta.hideForAuth)) {
+      if (store.getters['xstore/isAuthenticated']) {
+        next('/app')
+      }
+    }
     if (to.matched.some((record) => record.meta.requireLogin)) {
       if (store.getters['xstore/isAuthenticated']) {
         next()
