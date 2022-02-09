@@ -16,23 +16,18 @@ const mutations = {
 }
 
 const actions = {
-  async login ({
-    commit,
-    state
-  }, payload) {
+  async login (context, payload) {
     const output = await api.post('/api/login', payload)
     const response = output.data
     if (response.success) {
-      commit('setToken', response.data.token)
-      commit('setAuthenticated', true)
+      context.commit('setToken', response.data.token)
+      context.commit('setAuthenticated', true)
       api.defaults.headers.common.Authorization = 'Bearer ' + response.data.token
     }
   },
-  async logout ({
-    commit
-  }) {
-    commit('setToken', '')
-    commit('setAuthenticated', false)
+  async logout (context) {
+    context.commit('setToken', '')
+    context.commit('setAuthenticated', false)
     api.post('/api/logout').then(() => {
       api.defaults.headers.common.Authorization = ''
     })
