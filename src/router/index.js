@@ -39,6 +39,7 @@ export default route(function ({ store }) {
     if (to.matched.some((record) => record.meta.hideForAuth)) {
       if (store.getters['xstore/isAuthenticated']) {
         next('/app')
+        return
       }
     }
     if (to.matched.some((record) => record.meta.requireLogin)) {

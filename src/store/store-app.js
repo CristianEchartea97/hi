@@ -25,15 +25,17 @@ const actions = {
     if (response.success) {
       commit('setToken', response.data.token)
       commit('setAuthenticated', true)
-      api.defaults.headers.common.Authorization = 'JWT ' + response.data.token
+      api.defaults.headers.common.Authorization = 'Bearer ' + response.data.token
     }
   },
-  logout ({
+  async logout ({
     commit
   }) {
     commit('setToken', '')
     commit('setAuthenticated', false)
-    api.defaults.headers.common.Authorization = ''
+    api.post('/api/logout').then(() => {
+      api.defaults.headers.common.Authorization = ''
+    })
   }
 }
 
