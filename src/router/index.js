@@ -6,7 +6,6 @@ import {
   createWebHistory
 } from 'vue-router'
 import routes from './routes'
-// import store from '../store'
 
 /*
  * If not building with SSR mode, you can
@@ -17,7 +16,7 @@ import routes from './routes'
  * with the Router instance.
  */
 
-export default route(function (/* { store, ssrContext } */) {
+export default route(function ({ store }) {
   // const $store = useStore()
   const createHistory = process.env.SERVER
     ? createMemoryHistory
@@ -38,7 +37,7 @@ export default route(function (/* { store, ssrContext } */) {
 
   Router.beforeEach((to, from, next) => {
     if (to.matched.some((record) => record.meta.requireLogin)) {
-      if (localStorage.getItem('token')) {
+      if (store.getters['xstore/isAuthenticated']) {
         next()
       } else {
         next('/')
@@ -47,18 +46,6 @@ export default route(function (/* { store, ssrContext } */) {
       next()
     }
   })
-
-  // Router.beforeEach((to, from, next) => {
-  //   if (to.matched.some((record) => record.meta.guest)) {
-  //     if (store.getters.isAuthenticated) {
-  //       next('/posts')
-  //       return
-  //     }
-  //     next()
-  //   } else {
-  //     next()
-  //   }
-  // })
 
   return Router
 })

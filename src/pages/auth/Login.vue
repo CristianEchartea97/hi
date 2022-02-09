@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import { useRouter } from 'vue-router'
 
 let $route
@@ -88,7 +87,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions('auth', ['doLogin']),
     async submit () {
       if (!this.form.email || !this.form.password) {
         console.log('something wrong')
@@ -96,8 +94,11 @@ export default {
         console.log('password length')
       } else {
         try {
-          await this.doLogin(this.form)
-          $route.push({ name: 'reportsHome' })
+          console.log('sending auth')
+          await this.$store.dispatch('xstore/login', this.form)
+          if (this.$store.getters['xstore/isAuthenticated']) {
+            $route.push({ name: 'reportsHome' })
+          }
         } catch (err) {
           this.error = true
           this.alert = 'error'
