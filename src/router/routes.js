@@ -2,21 +2,32 @@ const routes = [
   {
     path: '/',
     name: 'login',
+    meta: {
+      hideForAuth: true
+    },
     component: () => import('pages/auth/Login.vue')
   },
   {
     path: '/signup',
     name: 'signup',
+    meta: {
+      hideForAuth: true
+    },
     component: () => import('pages/auth/SignUp.vue')
   },
   {
     path: '/missing-pass',
     name: 'missingPass',
+    meta: {
+      hideForAuth: true
+    },
     component: () => import('pages/auth/ForgotPass.vue')
   },
   {
-    path: '/home',
+    path: '/app',
+    name: 'home',
     component: () => import('layouts/MainLayout.vue'),
+    meta: { requireLogin: true },
     children: [
       {
         path: '',

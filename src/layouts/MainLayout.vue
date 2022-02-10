@@ -5,13 +5,58 @@
         <q-toolbar>
           <q-toolbar-title>OTTO App</q-toolbar-title>
           <div class="q-pa-md q-gutter-sm">
-            <q-btn dense color="purple" round icon="email" class="q-ml-md">
+            <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages" @click="doWea">
               <q-badge color="red" floating>4</q-badge>
+              <q-tooltip>
+                You have 4 new messages
+              </q-tooltip>
             </q-btn>
-            <q-btn color="white" size="sm" text-color="black" label="LogOut"/>
+            <q-btn color="white" size="sm" text-color="black" label="LogOut"
+                   @click="logOut"
+            />
           </div>
         </q-toolbar>
       </q-header>
+      <q-dialog v-model="carousel">
+        <q-carousel
+          transition-prev="slide-right"
+          transition-next="slide-left"
+          swipeable
+          animated
+          v-model="slide"
+          control-color="primary"
+          navigation-icon="radio_button_unchecked"
+          navigation
+          padding
+          height="200px"
+          class="bg-white shadow-1 rounded-borders"
+        >
+          <q-carousel-slide :name="1" class="column no-wrap flex-center">
+            <q-icon name="style" color="primary" size="56px"/>
+            <div class="q-mt-md text-center">
+              {{ lorem }}
+            </div>
+          </q-carousel-slide>
+          <q-carousel-slide :name="2" class="column no-wrap flex-center">
+            <q-icon name="live_tv" color="primary" size="56px"/>
+            <div class="q-mt-md text-center">
+              {{ lorem }}
+            </div>
+          </q-carousel-slide>
+          <q-carousel-slide :name="3" class="column no-wrap flex-center">
+            <q-icon name="layers" color="primary" size="56px"/>
+            <div class="q-mt-md text-center">
+              {{ lorem }}
+            </div>
+          </q-carousel-slide>
+          <q-carousel-slide :name="4" class="column no-wrap flex-center">
+            <q-icon name="terrain" color="primary" size="56px"/>
+            <div class="q-mt-md text-center">
+              {{ lorem }}
+            </div>
+          </q-carousel-slide>
+        </q-carousel>
+      </q-dialog>
 
       <q-drawer
         v-model="drawer"
@@ -19,7 +64,8 @@
         :width="200"
         :breakpoint="400"
       >
-        <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+        <q-scroll-area
+          style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
           <q-list padding>
             <q-item :to="{ name: 'reportsHome' }" clickable v-ripple exact>
               <q-item-section avatar>
@@ -56,7 +102,9 @@
           </q-list>
         </q-scroll-area>
 
-        <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
+        <q-img class="absolute-top"
+               src="https://cdn.quasar.dev/img/material.png"
+               style="height: 150px">
           <div class="absolute-bottom bg-transparent">
             <q-avatar size="56px" class="q-mb-sm">
               <img src="https://cdn.quasar.dev/img/boy-avatar.png">
@@ -79,9 +127,28 @@
 import { ref } from 'vue'
 
 export default {
+
   setup () {
     return {
-      drawer: ref(false)
+      drawer: ref(false),
+      carousel: ref(false),
+      slide: ref(1),
+      lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!'
+    }
+  },
+  methods: {
+    logOut () {
+      console.log('signing out')
+      try {
+        this.$store.dispatch('xstore/logout')
+        this.$router.push({ name: 'login' })
+      } catch (err) {
+        alert(err)
+      }
+    },
+    doWea () {
+      this.carousel = true
+      console.log('dasdas')
     }
   }
 }

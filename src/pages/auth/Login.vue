@@ -13,20 +13,42 @@
               :rules="[ val => val && val.length > 0 || 'Email cannot be empty']"
             />
             <q-input
-              v-model="form.pass"
+              v-model="form.password"
               type="password"
               lazy-rules
               label="Password"
               :rules="[ val => val && val.length > 0 || 'Password cannot be empty']"
             />
             <q-btn class="q-mt-lg" label="Login" type="submit" lazy-rules
-                   color="primary"/>
+                   color="primary"
+            />
+            <q-btn class="q-mt-lg" label="Register" type="submit" lazy-rules
+                   color="accent"
+                   flat @click="doRegister"
+            />
+            <div v-if="error">
+              <q-dialog v-model="error">
+                <q-card>
+                  <q-card-section>
+                    <div class="text-h6">Alert</div>
+                  </q-card-section>
+
+                  <q-card-section class="q-pt-none">
+                    Could not authenticate, please check email or password.
+                  </q-card-section>
+
+                  <q-card-actions align="right">
+                    <q-btn flat label="OK" color="primary" v-close-popup/>
+                  </q-card-actions>
+                </q-card>
+              </q-dialog>
+            </div>
           </q-form>
         </q-page-container>
         <!-- video column-->
         <q-page-container
           class="conb col-md-8 video shadow-10 desktop-only overflow-hidden">
-          <q-parallax :height="height">
+          <q-parallax :height="windowHeight">
             <template v-slot:media>
               <video width="1920" height="1080"
                      poster="https://cdn.quasar.dev/img/polina.jpg" autoplay
@@ -45,33 +67,47 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue'
-
 export default {
-  setup () {
-    // console.log('props: ', props)
-    const height = ref(window.innerHeight)
-    const submit = () => {
-      console.log('dasdas', form.pass)
-      if (form.pass.length === 0) {
-        console.log('sip')
-        // TODO: remove
-      }
-      // this.$router.push({ name: 'home', query: { redirect: '/home' } })
-    }
-    const form = reactive({
-      name: '',
-      pass: '',
-      email: ''
-    })
-
+  name: 'login',
+  data () {
     return {
-      form,
-      submit,
-      height,
-      onSubmit () {
-        alert('holis')
+      form: {
+        email: '',
+        password: ''
+      },
+      error: false,
+      alert: ''
+    }
+  },
+  methods: {
+    async submit () {
+      if (!this.form.email || !this.form.password) {
+        console.log('something wrong')
+      } else if (this.form.password.length < 6) {
+        console.log('password length')
+      } else {
+        try {
+          console.log('sending auth')
+          await this.$store.dispatch('xstore/login', this.form)
+          if (this.$store.getters['xstore/isAuthenticated']) {
+            this.$router.push({ name: 'reportsHome' })
+          }
+        } catch (err) {
+          this.error = true
+          this.alert = 'error'
+          this.form.email = ''
+          this.form.password = ''
+        }
       }
+    },
+    doRegister () {
+      console.log('in do register')
+      this.$router.push({ name: 'signup' })
+    }
+  },
+  computed: {
+    windowHeight () {
+      return window.innerHeight
     }
   }
 }
