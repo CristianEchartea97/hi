@@ -6,9 +6,9 @@
           <q-toolbar-title @click="drawer=!drawer">OTTO App</q-toolbar-title>
           <div class="q-pa-md q-gutter-sm">
             <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages" @click="showMessages">
-              <q-badge color="red" floating>4</q-badge>
+              <q-badge color="red" floating>{{ unreadNotifications }}</q-badge>
               <q-tooltip>
-                You have 4 new messages
+                You have {{ unreadNotifications }} new messages
               </q-tooltip>
             </q-btn>
             <q-btn color="white" size="sm" text-color="black" label="LogOut"
@@ -127,7 +127,8 @@
 export default {
   data () {
     return {
-      userName: this.$store.getters['xstore/getUserName'],
+      unreadNotifications: 0,
+      userName: '',
       drawer: false,
       carousel: false,
       slide: 1,
@@ -148,6 +149,11 @@ export default {
     showMessages () {
       this.carousel = true
     }
+  },
+  mounted () {
+    this.$store.dispatch('xstore/updateNotifications')
+    this.userName = this.$store.getters['xstore/getUserName']
+    this.unreadNotifications = this.$store.getters['xstore/getNotifications']
   }
 }
 </script>

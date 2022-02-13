@@ -4,11 +4,15 @@ const state = {
   token: '',
   authenticated: false,
   userName: '',
-  role: ''
+  role: '',
+  notifications: 0
 }
 
 // synchronous actions
 const mutations = {
+  setNotifications (state, value) {
+    state.notifications = value
+  },
   setRole (state, value) {
     state.role = value
   },
@@ -24,6 +28,9 @@ const mutations = {
 }
 
 const getters = {
+  getNotifications: (state) => {
+    return state.notifications
+  },
   isAuthenticated: (state) => {
     return state.authenticated
   },
@@ -48,6 +55,14 @@ const actions = {
       context.commit('setRole', response.data.role)
       context.commit('setAuthenticated', true)
     }
+  },
+  async updateNotifications (context) {
+    const output = await api.get('/api/user/notifications')
+    const response = output.data
+    if (!response.success) {
+      return
+    }
+    context.commit('setNotifications', response.data.notifications)
   },
   async logout (context) {
     context.commit('setToken', '')
