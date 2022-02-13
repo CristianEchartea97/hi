@@ -4,7 +4,7 @@
       <StepOne @stepDone="step++"/>
       <StepTwo @fileFound="getFile" @stepDone="step++" @stepBefore="step--"/>
       <StepThree :step="step" @stepDone="step++" @stepBefore="step--"/>
-      <StepFour/>
+      <StepFour :step="step" :document="document"/>
     </q-stepper>
   </div>
 </template>
@@ -26,13 +26,13 @@ export default {
       step: 1,
       document: null,
       alert: false,
-      client: this.api,
       startAnalysis: false
     }
   },
   methods: {
     getFile (document) {
       this.document = document
+      console.log('document is ' + this.document.name)
     }
   }
 }

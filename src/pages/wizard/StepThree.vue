@@ -40,7 +40,7 @@ export default {
       await setTimeout(() => {
         console.log('analysis is done')
         this.advance()
-      }, 3000)
+      }, 5000)
     },
     goBack () {
       this.done = false
