@@ -3,7 +3,7 @@
     <q-layout view="lHh Lpr lff">
       <q-header elevated class="bg-cyan-8">
         <q-toolbar>
-          <q-toolbar-title>OTTO App</q-toolbar-title>
+          <q-toolbar-title @click="drawer=!drawer">OTTO App</q-toolbar-title>
           <div class="q-pa-md q-gutter-sm">
             <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages" @click="showMessages">
               <q-badge color="red" floating>4</q-badge>
@@ -109,7 +109,7 @@
             <q-avatar size="56px" class="q-mb-sm">
               <img src="https://cdn.quasar.dev/img/boy-avatar.png">
             </q-avatar>
-            <div class="text-weight-bold">Naruto Uzumake</div>
+            <div class="text-weight-bold">{{ userName }}</div>
             <div>@naruto</div>
           </div>
         </q-img>
@@ -124,15 +124,13 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue'
-
 export default {
-
-  setup () {
+  data () {
     return {
-      drawer: ref(false),
-      carousel: ref(false),
-      slide: ref(1),
+      userName: this.$store.getters['xstore/getUserName'],
+      drawer: false,
+      carousel: false,
+      slide: 1,
       lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!'
     }
   },
