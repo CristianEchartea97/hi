@@ -16,8 +16,7 @@ export default {
   },
   data () {
     return {
-      done: false,
-      client: this.api
+      done: false
     }
   },
   watch: {
@@ -31,8 +30,7 @@ export default {
   },
   methods: {
     async fileUpload () {
-      console.log('upload file ' + this.document.size)
-      const newJobOut = await this.client.post('/api/createJob')
+      const newJobOut = await this.api.post('/api/createJob')
       const newJobData = newJobOut.data
       if (!newJobData.success) {
         this.$q.notify({
@@ -42,11 +40,11 @@ export default {
         return
       }
       const payload = {
-        jobId: newJobData.jobId,
-        filename: this.file.name,
-        size: this.file.size
+        jobId: newJobData.data.jobId,
+        filename: this.document.name,
+        size: this.document.size
       }
-      const newDocOut = await this.client.post('/api/registerDocument', payload)
+      const newDocOut = await this.api.post('/api/registerDocument', payload)
       const newDocData = newDocOut.data
       if (!newDocData.success) {
         this.$q.notify({
