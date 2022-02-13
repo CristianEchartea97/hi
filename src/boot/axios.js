@@ -9,14 +9,10 @@ import axios from 'axios'
 // for each client)
 const api = axios.create({ baseURL: 'http://150.136.182.124:8081/' })
 
+// https://stackoverflow.com/questions/63100658/add-global-variable-in-vue-js-3
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
-
-  app.config.globalProperties.$axios = axios
-  // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
-  //       so you won't necessarily have to import axios in each vue file
-
-  app.config.globalProperties.$api = api
+  app.config.globalProperties.api = api
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
   //       so you can easily perform requests against your app's API
 })

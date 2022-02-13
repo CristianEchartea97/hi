@@ -5,7 +5,7 @@
         <q-toolbar>
           <q-toolbar-title>OTTO App</q-toolbar-title>
           <div class="q-pa-md q-gutter-sm">
-            <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages" @click="doWea">
+            <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages" @click="showMessages">
               <q-badge color="red" floating>4</q-badge>
               <q-tooltip>
                 You have 4 new messages
@@ -137,18 +137,17 @@ export default {
     }
   },
   methods: {
-    logOut () {
+    async logOut () {
       console.log('signing out')
       try {
-        this.$store.dispatch('xstore/logout')
-        this.$router.push({ name: 'login' })
+        await this.$store.dispatch('xstore/logout')
+        await this.$router.push({ name: 'login' })
       } catch (err) {
         alert(err)
       }
     },
-    doWea () {
+    showMessages () {
       this.carousel = true
-      console.log('dasdas')
     }
   }
 }

@@ -72,7 +72,8 @@ export default {
     return {
       step: 1,
       file: null,
-      alert: false
+      alert: false,
+      client: this.api
     }
   },
   methods: {

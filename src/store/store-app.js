@@ -26,11 +26,10 @@ const actions = {
     }
   },
   async logout (context) {
+    await api.post('/api/logout')
     context.commit('setToken', '')
     context.commit('setAuthenticated', false)
-    api.post('/api/logout').then(() => {
-      api.defaults.headers.common.Authorization = ''
-    })
+    api.defaults.headers.common.Authorization = ''
   }
 }
 

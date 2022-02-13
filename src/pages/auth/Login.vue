@@ -90,7 +90,7 @@ export default {
           console.log('sending auth')
           await this.$store.dispatch('xstore/login', this.form)
           if (this.$store.getters['xstore/isAuthenticated']) {
-            this.$router.push({ name: 'reportsHome' })
+            await this.$router.push({ name: 'reportsHome' })
           }
         } catch (err) {
           this.error = true
