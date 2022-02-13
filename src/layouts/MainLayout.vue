@@ -3,12 +3,12 @@
     <q-layout view="lHh Lpr lff">
       <q-header elevated class="bg-cyan-8">
         <q-toolbar>
-          <q-toolbar-title>OTTO App</q-toolbar-title>
+          <q-toolbar-title @click="drawer=!drawer">OTTO App</q-toolbar-title>
           <div class="q-pa-md q-gutter-sm">
-            <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages" @click="doWea">
-              <q-badge color="red" floating>4</q-badge>
+            <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages" @click="showMessages">
+              <q-badge color="red" floating>{{ unreadNotifications }}</q-badge>
               <q-tooltip>
-                You have 4 new messages
+                You have {{ unreadNotifications }} new messages
               </q-tooltip>
             </q-btn>
             <q-btn color="white" size="sm" text-color="black" label="LogOut"
@@ -109,7 +109,7 @@
             <q-avatar size="56px" class="q-mb-sm">
               <img src="https://cdn.quasar.dev/img/boy-avatar.png">
             </q-avatar>
-            <div class="text-weight-bold">Naruto Uzumake</div>
+            <div class="text-weight-bold">{{ userName }}</div>
             <div>@naruto</div>
           </div>
         </q-img>
@@ -124,32 +124,36 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue'
-
 export default {
-
-  setup () {
+  data () {
     return {
-      drawer: ref(false),
-      carousel: ref(false),
-      slide: ref(1),
+      unreadNotifications: 0,
+      userName: '',
+      drawer: false,
+      carousel: false,
+      slide: 1,
       lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!'
     }
   },
   methods: {
-    logOut () {
+    async logOut () {
       console.log('signing out')
       try {
-        this.$store.dispatch('xstore/logout')
-        this.$router.push({ name: 'login' })
+        await this.$store.dispatch('xstore/logout')
+        this.api.defaults.headers.common.Authorization = ''
+        await this.$router.push({ name: 'login' })
       } catch (err) {
         alert(err)
       }
     },
-    doWea () {
+    showMessages () {
       this.carousel = true
-      console.log('dasdas')
     }
+  },
+  mounted () {
+    this.$store.dispatch('xstore/updateNotifications')
+    this.userName = this.$store.getters['xstore/getUserName']
+    this.unreadNotifications = this.$store.getters['xstore/getNotifications']
   }
 }
 </script>
