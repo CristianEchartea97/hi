@@ -46,6 +46,7 @@ export default {
       this.$emit('stepBefore')
     },
     advance () {
+      console.log('user is picking the file')
       this.done = true
       this.$emit('stepDone')
     },
