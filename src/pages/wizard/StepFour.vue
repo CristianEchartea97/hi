@@ -1,5 +1,10 @@
 <template>
-  <q-step :name="4" title="Successful upload" icon="add_comment" :done="done">
+  <q-step
+    :name="4"
+    title="Successful upload"
+    icon="add_comment"
+    :done="done"
+  >
     The file was uploaded successfully.
   </q-step>
 </template>
@@ -21,11 +26,12 @@ export default {
         return
       }
       console.log('Start file upload')
+      this.fileUpload()
     }
   },
   methods: {
     fileUpload () {
-      console.log('upload file ' + document.size)
+      console.log('upload file ' + this.document.size)
     }
   }
 }
