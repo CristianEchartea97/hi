@@ -73,12 +73,8 @@ export default {
     return {
       copyToClipboard,
       rows,
-      columns,
-      client: this.api
+      columns
     }
-  },
-  mounted: function () {
-    console.log('Auth ' + this.client.defaults.headers.common.Authorization)
   }
 }
 </script>

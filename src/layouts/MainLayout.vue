@@ -139,6 +139,7 @@ export default {
       console.log('signing out')
       try {
         await this.$store.dispatch('xstore/logout')
+        this.api.defaults.headers.common.Authorization = ''
         await this.$router.push({ name: 'login' })
       } catch (err) {
         alert(err)

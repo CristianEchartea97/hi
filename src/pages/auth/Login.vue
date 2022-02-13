@@ -90,6 +90,7 @@ export default {
           console.log('sending auth')
           await this.$store.dispatch('xstore/login', this.form)
           if (this.$store.getters['xstore/isAuthenticated']) {
+            this.api.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['xstore/getToken']
             await this.$router.push({ name: 'reportsHome' })
           }
         } catch (err) {

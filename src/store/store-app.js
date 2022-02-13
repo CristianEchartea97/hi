@@ -47,14 +47,12 @@ const actions = {
       context.commit('setUserName', response.data.name)
       context.commit('setRole', response.data.role)
       context.commit('setAuthenticated', true)
-      api.defaults.headers.common.Authorization = 'Bearer ' + response.data.token
     }
   },
   async logout (context) {
     context.commit('setToken', '')
     context.commit('setAuthenticated', false)
     await api.post('/api/logout')
-    api.defaults.headers.common.Authorization = ''
   }
 }
 
