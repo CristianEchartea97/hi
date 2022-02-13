@@ -1,9 +1,9 @@
 <template>
   <div class="q-pa-md">
-    <q-stepper v-model="step" vertical color="primary" animated @transition="transition">
+    <q-stepper v-model="step" vertical color="primary" animated>
       <StepOne @stepDone="step++"/>
       <StepTwo @fileFound="getFile" @stepDone="step++" @stepBefore="step--"/>
-      <StepThree/>
+      <StepThree :step="step" @stepDone="step++" @stepBefore="step--"/>
       <StepFour/>
     </q-stepper>
   </div>
@@ -26,18 +26,13 @@ export default {
       step: 1,
       document: null,
       alert: false,
-      client: this.api
+      client: this.api,
+      startAnalysis: false
     }
   },
   methods: {
     getFile (document) {
       this.document = document
-    },
-    transition (newVal, oldVal) {
-      console.log('new ' + newVal + ' old ' + oldVal)
-    },
-    uploadFile () {
-      console.log('start file upload')
     }
   }
 }
