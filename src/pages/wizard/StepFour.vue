@@ -53,8 +53,15 @@ export default {
         })
       }
       console.log(newDocData)
-      // const url = newDocData.data.url
-      // const uploadOut = await this.client.post('/api/registerDocument', payload)
+      const docPayload = {
+        filePath: this.document.name,
+        contentType: this.document.type,
+        fileSize: this.document.size
+      }
+      console.log(JSON.stringify(docPayload))
+      const url = newDocData.data.url
+      const uploadOut = await this.client.post(url, docPayload)
+      console.log(uploadOut)
     }
   }
 }
