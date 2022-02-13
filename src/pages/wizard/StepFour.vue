@@ -53,15 +53,29 @@ export default {
         })
       }
       console.log(newDocData)
-      const docPayload = {
-        filePath: this.document.name,
-        contentType: this.document.type,
-        fileSize: this.document.size
+
+      const formAttr = newDocData.data.postAttr.formAttr
+      const formInputs = newDocData.data.postAttr.formInputs
+
+      const formData = new FormData()
+      formData.append('file', this.document, this.document.name)
+      formData.append('acl', formInputs.acl)
+      formData.append('key', formInputs.key)
+      formData.append('X-Amz-Credential', formInputs['X-Amz-Credential'])
+      formData.append('X-Amz-Algorithm', formInputs['X-Amz-Algorithm'])
+      formData.append('X-Amz-Date', formInputs['X-Amz-Date'])
+      formData.append('Policy', formInputs.Policy)
+      formData.append('X-Amz-Signature', formInputs['X-Amz-Signature'])
+
+      try {
+        const uploadOut = await this.api.post(formAttr.action, formData)
+        console.log(uploadOut)
+      } catch (error) {
+        this.$q.notify({
+          type: 'negative',
+          message: 'There was a problem uploading the file'
+        })
       }
-      console.log(JSON.stringify(docPayload))
-      const url = newDocData.data.url
-      const uploadOut = await this.client.post(url, docPayload)
-      console.log(uploadOut)
     }
   }
 }
