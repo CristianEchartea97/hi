@@ -24,7 +24,7 @@
     </q-file>
 
     <q-stepper-navigation>
-      <q-btn @click="advance" color="primary" label="Continue"/>
+      <q-btn @click="advance" color="primary" label="Continue" :disable="disabled"/>
       <q-btn flat @click="goBack" color="primary" label="Back" class="q-ml-sm"/>
     </q-stepper-navigation>
   </q-step>
@@ -37,7 +37,8 @@ export default {
   data () {
     return {
       done: false,
-      file: null
+      file: null,
+      disabled: true
     }
   },
   methods: {
@@ -47,7 +48,9 @@ export default {
     },
     advance () {
       console.log('user is picking the file')
-      this.done = true
+      if (!this.done) {
+        return
+      }
       this.$emit('stepDone')
     },
     readFileProperties () {
@@ -57,7 +60,10 @@ export default {
           type: 'negative',
           message: 'Your file is too small :c.'
         })
+        return
       }
+      this.done = true
+      this.disabled = false
       console.log('File was selected ' + this.file.name)
       console.log('File was selected ' + this.file.size + ' bytes')
       this.$emit('fileFound', this.file)
