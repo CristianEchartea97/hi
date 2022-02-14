@@ -18,40 +18,7 @@
       >
         <q-scroll-area
           style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
-          <q-list padding>
-            <q-item :to="{ name: 'reportsHome' }" clickable v-ripple exact>
-              <q-item-section avatar>
-                <q-icon name="travel_explore"/>
-              </q-item-section>
-              <q-item-section>
-                My Reports
-              </q-item-section>
-            </q-item>
-            <q-item :to="{ name: 'wizardHome' }" clickable v-ripple exact>
-              <q-item-section avatar>
-                <q-icon name="tips_and_updates"/>
-              </q-item-section>
-              <q-item-section>
-                Wizard
-              </q-item-section>
-            </q-item>
-            <q-item :to="{ name: 'filesHome' }" clickable v-ripple exact>
-              <q-item-section avatar>
-                <q-icon name="file_upload"/>
-              </q-item-section>
-              <q-item-section>
-                Upload
-              </q-item-section>
-            </q-item>
-            <q-item :to="{ name: 'settingsHome' }" clickable v-ripple exact>
-              <q-item-section avatar>
-                <q-icon name="settings"/>
-              </q-item-section>
-              <q-item-section>
-                Settings
-              </q-item-section>
-            </q-item>
-          </q-list>
+          <MainUserMenu/>
         </q-scroll-area>
 
         <q-img class="absolute-top"
@@ -78,11 +45,13 @@
 <script>
 import MessageBox from 'components/MessageBox.vue'
 import LogoutBtn from 'components/LogoutBtn.vue'
+import MainUserMenu from 'components/MainUserMenu.vue'
 
 export default {
   components: {
     LogoutBtn,
-    MessageBox
+    MessageBox,
+    MainUserMenu
   },
   data () {
     return {
