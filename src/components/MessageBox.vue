@@ -1,64 +1,71 @@
 <template>
-  <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages" @click="showMessages">
+  <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages" @click="getNotifications">
     <q-badge color="red" floating>{{ unreadNotifications }}</q-badge>
     <q-tooltip>
       You have {{ unreadNotifications }} new messages
     </q-tooltip>
+    <q-menu transition-show="jump-down">
+      <q-list bordered class="rounded-borders" style="max-width: 350px">
+        <q-item-label header>Friends</q-item-label>
+        <q-item clickable v-ripple>
+          <q-item-section avatar>
+            <q-avatar>
+              <img src="https://cdn.quasar.dev/img/avatar2.jpg">
+            </q-avatar>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label lines="1">Brunch this weekend?</q-item-label>
+            <q-item-label caption lines="2">
+              <span class="text-weight-bold">Janet</span>
+              -- I'll be in your neighborhood doing errands this
+              weekend. Do you want to grab brunch?
+            </q-item-label>
+          </q-item-section>
+
+          <q-item-section side top>
+            1 min ago
+          </q-item-section>
+        </q-item>
+
+        <q-separator inset="item"/>
+
+        <q-item clickable v-ripple>
+          <q-item-section avatar>
+            <q-avatar>
+              <img src="https://cdn.quasar.dev/img/avatar4.jpg">
+            </q-avatar>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label lines="1">Linear Project</q-item-label>
+            <q-item-label caption lines="2">
+              <span class="text-weight-bold">John</span>
+              -- Can we schedule a call for tomorrow?
+            </q-item-label>
+          </q-item-section>
+
+          <q-item-section side top>
+            1 min ago
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-menu>
   </q-btn>
-  <q-dialog v-model="carousel">
-    <q-carousel
-      transition-prev="slide-right"
-      transition-next="slide-left"
-      swipeable
-      animated
-      v-model="slide"
-      control-color="primary"
-      navigation-icon="radio_button_unchecked"
-      navigation
-      padding
-      height="200px"
-      class="bg-white shadow-1 rounded-borders"
-    >
-      <q-carousel-slide :name="1" class="column no-wrap flex-center">
-        <q-icon name="style" color="primary" size="56px"/>
-        <div class="q-mt-md text-center">
-          {{ lorem }}
-        </div>
-      </q-carousel-slide>
-      <q-carousel-slide :name="2" class="column no-wrap flex-center">
-        <q-icon name="live_tv" color="primary" size="56px"/>
-        <div class="q-mt-md text-center">
-          {{ lorem }}
-        </div>
-      </q-carousel-slide>
-      <q-carousel-slide :name="3" class="column no-wrap flex-center">
-        <q-icon name="layers" color="primary" size="56px"/>
-        <div class="q-mt-md text-center">
-          {{ lorem }}
-        </div>
-      </q-carousel-slide>
-      <q-carousel-slide :name="4" class="column no-wrap flex-center">
-        <q-icon name="terrain" color="primary" size="56px"/>
-        <div class="q-mt-md text-center">
-          {{ lorem }}
-        </div>
-      </q-carousel-slide>
-    </q-carousel>
-  </q-dialog>
 </template>
 <script>
 export default {
   data () {
     return {
-      carousel: false,
-      slide: 1,
-      lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!',
-      unreadNotifications: 0
+      unreadNotifications: 0,
+      notificationsList: Array
     }
   },
   methods: {
-    showMessages () {
-      this.carousel = true
+    async getNotifications () {
+      const output = await this.api.get('/api/user/notifications/unseen')
+      const response = output.data
+      this.notificationsList = response.data
     }
   },
   mounted () {
