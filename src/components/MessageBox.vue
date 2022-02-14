@@ -1,8 +1,8 @@
 <template>
   <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages" @click="loadMessage=true">
-    <q-badge color="red" floating>{{ unreadNotifications }}</q-badge>
+    <q-badge color="red" floating>{{ this.$store.getters['xstore/getNotifications'] }}</q-badge>
     <q-tooltip>
-      You have {{ unreadNotifications }} new messages
+      You have {{ this.$store.getters['xstore/getNotifications'] }} new messages
     </q-tooltip>
     <NotificationsList :load-message="loadMessage"/>
   </q-btn>
@@ -14,13 +14,11 @@ export default {
   components: { NotificationsList },
   data () {
     return {
-      loadMessage: false,
-      unreadNotifications: 0
+      loadMessage: false
     }
   },
   mounted () {
     this.$store.dispatch('xstore/updateNotifications')
-    this.unreadNotifications = this.$store.getters['xstore/getNotifications']
   }
 }
 </script>

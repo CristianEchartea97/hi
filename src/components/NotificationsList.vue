@@ -67,8 +67,9 @@ export default {
       this.working = true
       const output = await this.api.get('/api/user/notifications/unseen')
       const response = output.data
-      this.working = false
       this.notificationsList = response.data
+      await this.$store.dispatch('xstore/updateNotifications')
+      this.working = false
     },
     async getNotifications () {
       if (this.notificationsList.length > 0) {
