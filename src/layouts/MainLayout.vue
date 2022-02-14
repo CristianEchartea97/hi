@@ -11,7 +11,7 @@
                 You have {{ unreadNotifications }} new messages
               </q-tooltip>
             </q-btn>
-            <q-btn color="white" size="sm" text-color="black" label="LogOut"
+            <q-btn :disable="logoutBtn" color="white" size="sm" text-color="black" label="LogOut"
                    @click="logOut"
             />
           </div>
@@ -127,6 +127,7 @@
 export default {
   data () {
     return {
+      logoutBtn: false,
       unreadNotifications: 0,
       userName: '',
       drawer: false,
@@ -138,12 +139,16 @@ export default {
   methods: {
     async logOut () {
       console.log('signing out')
+      this.logoutBtn = true
       try {
         await this.$store.dispatch('xstore/logout')
+      } catch (err) {
+        console.log('Ups I did it again')
+      }
+      try {
         this.api.defaults.headers.common.Authorization = ''
         await this.$router.push({ name: 'login' })
       } catch (err) {
-        alert(err)
       }
     },
     showMessages () {
