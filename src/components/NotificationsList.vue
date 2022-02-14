@@ -83,6 +83,10 @@ export default {
     async notificationWasSeen (message) {
       this.messageDetails = false
       console.log('marking ' + message.id + ' as seen')
+      const payload = {
+        id: message.id
+      }
+      await this.api.put('/user/notifications/seen', payload)
       await this.refreshNotifications()
     }
   },
