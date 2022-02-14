@@ -24,6 +24,9 @@ const mutations = {
   },
   setAuthenticated (state, value) {
     state.authenticated = value
+  },
+  setRegistered (state, value) {
+
   }
 }
 
@@ -68,6 +71,16 @@ const actions = {
     context.commit('setToken', '')
     context.commit('setAuthenticated', false)
     await api.post('/api/logout')
+  },
+  async register (context, payload) {
+    const output = await api.post('/api/register', payload)
+    const response = output.data
+    if (response.success) {
+      context.commit('setToken', response.data.token)
+      context.commit('setUserName', response.data.name)
+      context.commit('setRole', response.data.role)
+      context.commit('setAuthenticated', true)
+    }
   }
 }
 

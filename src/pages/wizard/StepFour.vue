@@ -1,11 +1,18 @@
 <template>
   <q-step
     :name="4"
-    title="Successful upload"
+    title="Upload status"
     icon="add_comment"
     :done="done"
   >
+  <div v-if="done">
     The file was uploaded successfully.
+  </div>
+  <div v-else class="text-red">
+    <q-icon name="warning" color="warning" size="4rem" />
+    There was a problem when trying to upload the file.
+  </div>
+
   </q-step>
 </template>
 <script>
