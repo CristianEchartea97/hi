@@ -9,7 +9,7 @@
         />
       </q-item>
       <div v-for="notification in notificationsList" :key="notification.id">
-        <q-item clickable v-ripple>
+        <q-item clickable v-ripple @click="showMessage(notification)">
           <q-item-section avatar>
             <q-avatar>
               <q-img alt="avatar" :src=notification.avatar></q-img>
@@ -30,6 +30,24 @@
       </div>
     </q-list>
   </q-menu>
+  <q-dialog v-model="messageDetails">
+    <q-card>
+      <q-card-section>
+        <q-avatar>
+          <q-img alt="avatar" :src=message.avatar></q-img>
+        </q-avatar>
+        <span class="q-pl-lg text-weight-bold">{{ message.name }}</span>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        {{ message.message }}
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn @click="notificationWasSeen(message)" flat label="OK" color="primary" v-close-popup/>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 <script>
 export default {
@@ -39,19 +57,33 @@ export default {
   data () {
     return {
       notificationsList: [],
-      working: false
+      working: false,
+      message: Object,
+      messageDetails: false
     }
   },
   methods: {
-    async getNotifications () {
-      if (this.notificationsList.length > 0) {
-        return
-      }
+    async refreshNotifications () {
       this.working = true
       const output = await this.api.get('/api/user/notifications/unseen')
       const response = output.data
       this.working = false
       this.notificationsList = response.data
+    },
+    async getNotifications () {
+      if (this.notificationsList.length > 0) {
+        return
+      }
+      await this.refreshNotifications()
+    },
+    showMessage (message) {
+      this.message = message
+      this.messageDetails = true
+    },
+    async notificationWasSeen (message) {
+      this.messageDetails = false
+      console.log('marking ' + message.id + ' as seen')
+      await this.refreshNotifications()
     }
   },
   watch: {
