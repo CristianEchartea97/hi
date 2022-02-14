@@ -6,53 +6,10 @@
           <q-toolbar-title @click="drawer=!drawer">OTTO App</q-toolbar-title>
           <div class="q-pa-md q-gutter-sm">
             <MessageBox/>
-            <q-btn :disable="logoutBtn" color="white" size="sm" text-color="black" label="LogOut"
-                   @click="logOut"
-            />
+            <LogoutBtn/>
           </div>
         </q-toolbar>
       </q-header>
-      <q-dialog v-model="carousel">
-        <q-carousel
-          transition-prev="slide-right"
-          transition-next="slide-left"
-          swipeable
-          animated
-          v-model="slide"
-          control-color="primary"
-          navigation-icon="radio_button_unchecked"
-          navigation
-          padding
-          height="200px"
-          class="bg-white shadow-1 rounded-borders"
-        >
-          <q-carousel-slide :name="1" class="column no-wrap flex-center">
-            <q-icon name="style" color="primary" size="56px"/>
-            <div class="q-mt-md text-center">
-              {{ lorem }}
-            </div>
-          </q-carousel-slide>
-          <q-carousel-slide :name="2" class="column no-wrap flex-center">
-            <q-icon name="live_tv" color="primary" size="56px"/>
-            <div class="q-mt-md text-center">
-              {{ lorem }}
-            </div>
-          </q-carousel-slide>
-          <q-carousel-slide :name="3" class="column no-wrap flex-center">
-            <q-icon name="layers" color="primary" size="56px"/>
-            <div class="q-mt-md text-center">
-              {{ lorem }}
-            </div>
-          </q-carousel-slide>
-          <q-carousel-slide :name="4" class="column no-wrap flex-center">
-            <q-icon name="terrain" color="primary" size="56px"/>
-            <div class="q-mt-md text-center">
-              {{ lorem }}
-            </div>
-          </q-carousel-slide>
-        </q-carousel>
-      </q-dialog>
-
       <q-drawer
         v-model="drawer"
         show-if-above
@@ -102,7 +59,7 @@
                style="height: 150px">
           <div class="absolute-bottom bg-transparent">
             <q-avatar size="56px" class="q-mb-sm">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+              <img alt="Avatar" src="https://cdn.quasar.dev/img/boy-avatar.png">
             </q-avatar>
             <div class="text-weight-bold">{{ userName }}</div>
             <div>@naruto</div>
@@ -120,40 +77,20 @@
 </template>
 <script>
 import MessageBox from 'components/MessageBox.vue'
+import LogoutBtn from 'components/LogoutBtn.vue'
 
 export default {
   components: {
+    LogoutBtn,
     MessageBox
   },
   data () {
     return {
-      logoutBtn: false,
       userName: '',
-      drawer: false,
-      carousel: false,
-      slide: 1,
-      lorem: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, ratione eum minus fuga, quasi dicta facilis corporis magnam, suscipit at quo nostrum!'
+      drawer: false
     }
   },
-  methods: {
-    logOut () {
-      console.log('signing out')
-      this.logoutBtn = true
-      try {
-        this.$store.dispatch('xstore/logout')
-      } catch (err) {
-        console.log('Ups I did it again')
-      }
-      try {
-        this.api.defaults.headers.common.Authorization = ''
-        this.$router.push({ name: 'login' })
-      } catch (err) {
-      }
-    },
-    showMessages () {
-      this.carousel = true
-    }
-  },
+  methods: {},
   mounted () {
     this.userName = this.$store.getters['xstore/getUserName']
   }
