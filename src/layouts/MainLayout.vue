@@ -5,12 +5,7 @@
         <q-toolbar>
           <q-toolbar-title @click="drawer=!drawer">OTTO App</q-toolbar-title>
           <div class="q-pa-md q-gutter-sm">
-            <q-btn color="white" size="sm" text-color="black" label="Messages" icon="messages" @click="showMessages">
-              <q-badge color="red" floating>{{ unreadNotifications }}</q-badge>
-              <q-tooltip>
-                You have {{ unreadNotifications }} new messages
-              </q-tooltip>
-            </q-btn>
+            <MessageBox/>
             <q-btn :disable="logoutBtn" color="white" size="sm" text-color="black" label="LogOut"
                    @click="logOut"
             />
@@ -124,11 +119,15 @@
   </div>
 </template>
 <script>
+import MessageBox from 'components/MessageBox.vue'
+
 export default {
+  components: {
+    MessageBox
+  },
   data () {
     return {
       logoutBtn: false,
-      unreadNotifications: 0,
       userName: '',
       drawer: false,
       carousel: false,
@@ -156,9 +155,7 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('xstore/updateNotifications')
     this.userName = this.$store.getters['xstore/getUserName']
-    this.unreadNotifications = this.$store.getters['xstore/getNotifications']
   }
 }
 </script>
