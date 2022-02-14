@@ -93,11 +93,13 @@ export default {
         try {
           this.working = true
           this.$store.dispatch('xstore/login', this.form).then(() => {
-            if (this.$store.getters['xstore/isAuthenticated']) {
-              this.working = false
-              this.api.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['xstore/getToken']
-              this.$router.push({ name: 'reportsHome' })
-            }
+            setTimeout(() => {
+              if (this.$store.getters['xstore/isAuthenticated']) {
+                this.working = false
+                this.api.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['xstore/getToken']
+                this.$router.push({ name: 'reportsHome' })
+              }
+            }, 700)
           })
         } catch (err) {
           this.error = true
