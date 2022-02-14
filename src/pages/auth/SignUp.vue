@@ -68,7 +68,7 @@ export default {
   methods: {
     async submit () {
       if (!this.form.email || !this.form.password || !this.form.name) {
-        console.log('something wrong', this.form)
+        console.log('something wrong')
       } else if (this.form.password.length < 6) {
         console.log('password length')
       } else {
