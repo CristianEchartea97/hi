@@ -24,9 +24,6 @@ const mutations = {
   },
   setAuthenticated (state, value) {
     state.authenticated = value
-  },
-  setRegistered (state, value) {
-
   }
 }
 
@@ -67,10 +64,12 @@ const actions = {
     }
     context.commit('setNotifications', response.data.notifications)
   },
-  async logout (context) {
+  logout (context) {
     context.commit('setToken', '')
     context.commit('setAuthenticated', false)
-    await api.post('/api/logout')
+    api.post('/api/logout').then(() => {
+      console.log('ByeBye')
+    })
   },
   async register (context, payload) {
     const output = await api.post('/api/register', payload)

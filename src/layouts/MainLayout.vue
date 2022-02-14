@@ -137,17 +137,17 @@ export default {
     }
   },
   methods: {
-    async logOut () {
+    logOut () {
       console.log('signing out')
       this.logoutBtn = true
       try {
-        await this.$store.dispatch('xstore/logout')
+        this.$store.dispatch('xstore/logout')
       } catch (err) {
         console.log('Ups I did it again')
       }
       try {
         this.api.defaults.headers.common.Authorization = ''
-        await this.$router.push({ name: 'login' })
+        this.$router.push({ name: 'login' })
       } catch (err) {
       }
     },
