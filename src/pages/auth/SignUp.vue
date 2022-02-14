@@ -87,7 +87,7 @@ export default {
           this.form.name = ''
           this.$q.notify({
             type: 'negative',
-            message: 'There was registering the user due to: ' + err
+            message: 'There was a registration error the user due to: ' + err
           })
         }
       }
