@@ -83,7 +83,7 @@ export default {
     }
   },
   methods: {
-    async submit () {
+    submit () {
       this.btnAction = true
       if (!this.form.email || !this.form.password) {
         console.log('something wrong')
@@ -92,14 +92,13 @@ export default {
       } else {
         try {
           this.working = true
-          await this.$store.dispatch('xstore/login', this.form)
-          setTimeout(async () => {
+          this.$store.dispatch('xstore/login', this.form).then(() => {
             if (this.$store.getters['xstore/isAuthenticated']) {
               this.working = false
               this.api.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['xstore/getToken']
-              await this.$router.push({ name: 'reportsHome' })
+              this.$router.push({ name: 'reportsHome' })
             }
-          }, 1000)
+          })
         } catch (err) {
           this.error = true
           this.alert = 'error'
