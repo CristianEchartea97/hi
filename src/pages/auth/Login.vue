@@ -19,13 +19,14 @@
               label="Password"
               :rules="[ val => val && val.length > 0 || 'Password cannot be empty']"
             />
-            <q-btn class="q-mt-lg" label="Login" type="submit" lazy-rules
-                   color="primary"
-            />
-            <q-btn class="q-mt-lg" label="Register" type="submit" lazy-rules
+            <q-btn :disable="btnAction" class="q-mt-lg" label="Login" type="submit" lazy-rules
+                   color="primary">
+            </q-btn>
+            <q-btn :disable="btnAction" class="q-mt-lg" label="Register" type="submit" lazy-rules
                    color="accent"
                    flat @click="doRegister"
             />
+            <q-spinner-bars v-if="working" size="md" color="secondary" class="self-end"/>
             <div v-if="error">
               <q-dialog v-model="error">
                 <q-card>
@@ -76,28 +77,35 @@ export default {
         password: ''
       },
       error: false,
+      working: false,
+      btnAction: false,
       alert: ''
     }
   },
   methods: {
     async submit () {
+      this.btnAction = true
       if (!this.form.email || !this.form.password) {
         console.log('something wrong')
       } else if (this.form.password.length < 6) {
         console.log('password length')
       } else {
         try {
-          console.log('sending auth')
+          this.working = true
           await this.$store.dispatch('xstore/login', this.form)
-          if (this.$store.getters['xstore/isAuthenticated']) {
-            this.api.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['xstore/getToken']
-            await this.$router.push({ name: 'reportsHome' })
-          }
+          setTimeout(async () => {
+            if (this.$store.getters['xstore/isAuthenticated']) {
+              this.working = false
+              this.api.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['xstore/getToken']
+              await this.$router.push({ name: 'reportsHome' })
+            }
+          }, 1000)
         } catch (err) {
           this.error = true
           this.alert = 'error'
           this.form.email = ''
           this.form.password = ''
+          this.btnAction = false
         }
       }
     },
