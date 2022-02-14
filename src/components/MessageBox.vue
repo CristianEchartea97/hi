@@ -17,7 +17,7 @@
           <q-item clickable v-ripple>
             <q-item-section avatar>
               <q-avatar>
-                <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png">
+                <q-img alt="avatar" :src=notification.avatar></q-img>
               </q-avatar>
             </q-item-section>
             <q-item-section>
