@@ -53,6 +53,11 @@ const routes = [
         path: '',
         name: 'usersHome',
         component: () => import('pages/oa/users/UsersHome')
+      },
+      {
+        path: 'notifications',
+        name: 'notificationsHome',
+        component: () => import('pages/oa/notifications/NotificationsHome')
       }
     ]
   },
