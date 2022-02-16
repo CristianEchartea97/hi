@@ -3,7 +3,10 @@
     <q-layout view="lHh Lpr lff">
       <q-header elevated class="bg-cyan-8">
         <q-toolbar>
-          <q-toolbar-title @click="drawer=!drawer">OTTO App</q-toolbar-title>
+          <q-toolbar-title @click="drawer=!drawer">
+            OTTO App
+            <q-icon name="verified_user" v-if="this.$store.getters['xstore/getRole']==='OTTITOAdmin'"/>
+          </q-toolbar-title>
           <div class="q-pa-md q-gutter-sm">
             <MessageBox/>
             <LogoutBtn/>
@@ -18,7 +21,8 @@
       >
         <q-scroll-area
           style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
-          <MainUserMenu/>
+          <MainUserMenu v-if="this.$store.getters['xstore/getRole']==='MainUser'"/>
+          <OttoAdminMenu v-if="this.$store.getters['xstore/getRole']==='OTTITOAdmin'"/>
         </q-scroll-area>
 
         <q-img class="absolute-top"
@@ -46,9 +50,11 @@
 import MessageBox from 'components/MessageBox.vue'
 import LogoutBtn from 'components/LogoutBtn.vue'
 import MainUserMenu from 'components/MainUserMenu.vue'
+import OttoAdminMenu from 'components/OttoAdminMenu'
 
 export default {
   components: {
+    OttoAdminMenu,
     LogoutBtn,
     MessageBox,
     MainUserMenu
