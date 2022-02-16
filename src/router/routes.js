@@ -32,22 +32,22 @@ const routes = [
       {
         path: '',
         name: 'reportsHome',
-        component: () => import('pages/reports/ReportsHome')
+        component: () => import('pages/mu/reports/ReportsHome')
       },
       {
         path: 'wizard',
         name: 'wizardHome',
-        component: () => import('pages/wizard/WizardHome')
+        component: () => import('pages/mu/wizard/WizardHome')
       },
       {
         path: 'my-files',
         name: 'filesHome',
-        component: () => import('pages/files/FilesHome')
+        component: () => import('pages/mu/files/FilesHome')
       },
       {
         path: 'my-settings',
         name: 'settingsHome',
-        component: () => import('pages/settings/SettingsHome')
+        component: () => import('pages/mu/settings/SettingsHome')
       },
       {
         path: '',
