@@ -18,16 +18,17 @@ const routes = [
   {
     path: '/missing-pass',
     name: 'missingPass',
-    meta: {
-      hideForAuth: true
-    },
-    component: () => import('pages/auth/ForgotPass.vue')
+    component: () => import('pages/auth/ForgotPass.vue'),
+    meta: { hideForAuth: true }
   },
   {
     path: '/app',
     name: 'home',
     component: () => import('layouts/MainLayout.vue'),
-    meta: { requireLogin: true },
+    meta: {
+      requireLogin: true,
+      role: 'MainUser'
+    },
     children: [
       {
         path: '',
@@ -48,7 +49,18 @@ const routes = [
         path: 'my-settings',
         name: 'settingsHome',
         component: () => import('pages/mu/settings/SettingsHome')
-      },
+      }
+    ]
+  },
+  {
+    path: '/admin',
+    name: 'adminHome',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      requireLogin: true,
+      role: 'OTTITOAdmin'
+    },
+    children: [
       {
         path: '',
         name: 'usersHome',

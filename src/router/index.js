@@ -34,19 +34,27 @@ export default route(function ({ store }) {
     history: createHistory(process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE)
   })
 
+  // if the user is already authenticated redirect them to home
   Router.beforeEach((to, from, next) => {
-    // if the user is already authenticated redirect them to home
     if (to.matched.some((record) => record.meta.hideForAuth)) {
-      if (store.getters['xstore/isAuthenticated']) {
-        next('/app')
-        return
+      const isAuthenticated = store.getters['xstore/isAuthenticated']
+      if (isAuthenticated) {
+        next({ name: this.$store.getters['xstore/getHomePage'] })
+      } else {
+        next()
       }
+    } else {
+      next()
     }
+  })
+
+  // if the user is not authenticated, redirect to home
+  Router.beforeEach((to, from, next) => {
     if (to.matched.some((record) => record.meta.requireLogin)) {
       if (store.getters['xstore/isAuthenticated']) {
         next()
       } else {
-        next('/')
+        next({ name: 'login' })
       }
     } else {
       next()

@@ -96,8 +96,10 @@ export default {
             setTimeout(() => {
               if (this.$store.getters['xstore/isAuthenticated']) {
                 this.working = false
-                this.api.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['xstore/getToken']
-                this.$router.push({ name: 'reportsHome' })
+                const token = this.$store.getters['xstore/getToken']
+                this.api.defaults.headers.common.Authorization = 'Bearer ' + token
+                const homePage = this.$store.getters['xstore/getHomePage']
+                this.$router.push({ name: homePage })
               }
             }, 700)
           })

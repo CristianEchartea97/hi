@@ -5,11 +5,25 @@ const state = {
   authenticated: false,
   userName: '',
   role: '',
-  notifications: 0
+  notifications: 0,
+  homePage: ''
 }
 
 // synchronous actions
 const mutations = {
+  setHomePage (state, value) {
+    let homePage
+    switch (value) {
+      case 'OTTITOAdmin':
+        homePage = 'usersHome'
+        break
+      case 'MainUser':
+      default:
+        homePage = 'reportsHome'
+        break
+    }
+    state.homePage = homePage
+  },
   setNotifications (state, value) {
     state.notifications = value
   },
@@ -28,6 +42,9 @@ const mutations = {
 }
 
 const getters = {
+  getHomePage: (state) => {
+    return state.homePage
+  },
   getNotifications: (state) => {
     return state.notifications
   },
@@ -53,6 +70,7 @@ const actions = {
       context.commit('setToken', response.data.token)
       context.commit('setUserName', response.data.name)
       context.commit('setRole', response.data.role)
+      context.commit('setHomePage', response.data.role)
       context.commit('setAuthenticated', true)
     }
   },
@@ -65,8 +83,12 @@ const actions = {
     context.commit('setNotifications', response.data.notifications)
   },
   logout (context) {
-    context.commit('setToken', '')
+    context.commit('setToken', null)
     context.commit('setAuthenticated', false)
+    context.commit('setNotifications', 0)
+    context.commit('setHomePage', null)
+    context.commit('setUserName', null)
+    context.commit('setRole', null)
     api.post('/api/logout').then(() => {
       console.log('ByeBye')
     })
