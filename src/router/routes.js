@@ -48,6 +48,11 @@ const routes = [
         path: 'my-settings',
         name: 'settingsHome',
         component: () => import('pages/settings/SettingsHome')
+      },
+      {
+        path: '',
+        name: 'usersHome',
+        component: () => import('pages/oa/users/UsersHome')
       }
     ]
   },
