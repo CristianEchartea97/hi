@@ -101,6 +101,7 @@ const actions = {
       context.commit('setUserName', response.data.name)
       context.commit('setRole', response.data.role)
       context.commit('setAuthenticated', true)
+      context.commit('setHomePage', response.data.role)
     }
   }
 }

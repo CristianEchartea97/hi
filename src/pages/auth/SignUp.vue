@@ -31,27 +31,6 @@
 </template>
 
 <script>
-// import { ref, reactive } from 'vue'
-
-// export default {
-//   setup () {
-//     const height = ref(window.innerHeight)
-//     const submit = () => {
-//       console.log('submit')
-//     }
-//     const form = reactive({
-//       name: '',
-//       pass: '',
-//       email: ''
-//     })
-
-//     return {
-//       form,
-//       submit,
-//       height
-//     }
-//   }
-// }
 export default {
   name: 'register',
   data () {
@@ -76,8 +55,10 @@ export default {
           console.log('sending registration', this.form)
           await this.$store.dispatch('xstore/register', this.form)
           if (this.$store.getters['xstore/isAuthenticated']) {
-            this.api.defaults.headers.common.Authorization = 'Bearer ' + this.$store.getters['xstore/getToken']
-            await this.$router.push({ name: 'reportsHome' })
+            const token = this.$store.getters['xstore/getToken']
+            this.api.defaults.headers.common.Authorization = 'Bearer ' + token
+            const homePage = this.$store.getters['xstore/getHomePage']
+            await this.$router.push({ name: homePage })
           }
         } catch (err) {
           this.error = true
