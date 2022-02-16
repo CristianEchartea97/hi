@@ -39,7 +39,7 @@ export default route(function ({ store }) {
     if (to.matched.some((record) => record.meta.hideForAuth)) {
       const isAuthenticated = store.getters['xstore/isAuthenticated']
       if (isAuthenticated) {
-        next({ name: this.$store.getters['xstore/getHomePage'] })
+        next({ name: store.getters['xstore/getHomePage'] })
       } else {
         next()
       }
@@ -53,6 +53,25 @@ export default route(function ({ store }) {
     if (to.matched.some((record) => record.meta.requireLogin)) {
       if (store.getters['xstore/isAuthenticated']) {
         next()
+      } else {
+        next({ name: 'login' })
+      }
+    } else {
+      next()
+    }
+  })
+
+  // users only can see its own level routes
+  Router.beforeEach((to, from, next) => {
+    if (to.meta.role !== undefined) {
+      const auth = store.getters['xstore/isAuthenticated']
+      if (auth) {
+        const userRole = store.getters['xstore/getRole']
+        if (userRole === to.meta.role) {
+          next()
+        } else {
+          next({ name: store.getters['xstore/getHomePage'] })
+        }
       } else {
         next({ name: 'login' })
       }
