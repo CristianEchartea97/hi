@@ -3,7 +3,10 @@
     <q-layout view="lHh Lpr lff">
       <q-header elevated class="bg-cyan-8">
         <q-toolbar>
-          <q-toolbar-title @click="drawer=!drawer">OTTO App</q-toolbar-title>
+          <q-toolbar-title @click="drawer=!drawer">
+            OTTO App
+            <q-icon name="verified_user" v-if="this.$store.getters['xstore/getRole']==='OTTITOAdmin'"/>
+          </q-toolbar-title>
           <div class="q-pa-md q-gutter-sm">
             <MessageBox/>
             <LogoutBtn/>
@@ -18,7 +21,8 @@
       >
         <q-scroll-area
           style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
-          <MainUserMenu/>
+          <MainUserMenu v-if="this.$store.getters['xstore/getRole']==='MainUser'"/>
+          <OttoAdminMenu v-if="this.$store.getters['xstore/getRole']==='OTTITOAdmin'"/>
         </q-scroll-area>
 
         <q-img class="absolute-top"
@@ -28,7 +32,7 @@
             <q-avatar size="56px" class="q-mb-sm">
               <img alt="Avatar" src="https://cdn.quasar.dev/img/boy-avatar.png">
             </q-avatar>
-            <div class="text-weight-bold">{{ userName }}</div>
+            <div class="text-weight-bold">{{ this.$store.getters['xstore/getUserName'] }}</div>
             <div>@naruto</div>
           </div>
         </q-img>
@@ -43,25 +47,25 @@
   </div>
 </template>
 <script>
-import MessageBox from 'components/MessageBox.vue'
-import LogoutBtn from 'components/LogoutBtn.vue'
-import MainUserMenu from 'components/MainUserMenu.vue'
+import MessageBox from 'components/MessageBox'
+import LogoutBtn from 'components/LogoutBtn'
+import MainUserMenu from 'components/MainUserMenu'
+import OttoAdminMenu from 'components/OttoAdminMenu'
 
 export default {
   components: {
+    OttoAdminMenu,
     LogoutBtn,
     MessageBox,
     MainUserMenu
   },
   data () {
     return {
-      userName: '',
       drawer: false
     }
   },
   methods: {},
   mounted () {
-    this.userName = this.$store.getters['xstore/getUserName']
   }
 }
 </script>

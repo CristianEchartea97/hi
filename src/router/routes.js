@@ -18,36 +18,58 @@ const routes = [
   {
     path: '/missing-pass',
     name: 'missingPass',
-    meta: {
-      hideForAuth: true
-    },
-    component: () => import('pages/auth/ForgotPass.vue')
+    component: () => import('pages/auth/ForgotPass.vue'),
+    meta: { hideForAuth: true }
   },
   {
     path: '/app',
     name: 'home',
     component: () => import('layouts/MainLayout.vue'),
-    meta: { requireLogin: true },
+    meta: {
+      requireLogin: true,
+      role: 'MainUser'
+    },
     children: [
       {
         path: '',
         name: 'reportsHome',
-        component: () => import('pages/reports/ReportsHome')
+        component: () => import('pages/mu/reports/ReportsHome')
       },
       {
         path: 'wizard',
         name: 'wizardHome',
-        component: () => import('pages/wizard/WizardHome')
+        component: () => import('pages/mu/wizard/WizardHome')
       },
       {
         path: 'my-files',
         name: 'filesHome',
-        component: () => import('pages/files/FilesHome')
+        component: () => import('pages/mu/files/FilesHome')
       },
       {
         path: 'my-settings',
         name: 'settingsHome',
-        component: () => import('pages/settings/SettingsHome')
+        component: () => import('pages/mu/settings/SettingsHome')
+      }
+    ]
+  },
+  {
+    path: '/admin',
+    name: 'adminHome',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      requireLogin: true,
+      role: 'OTTITOAdmin'
+    },
+    children: [
+      {
+        path: '',
+        name: 'usersHome',
+        component: () => import('pages/oa/users/UsersHome')
+      },
+      {
+        path: 'notifications',
+        name: 'notificationsHome',
+        component: () => import('pages/oa/notifications/NotificationsHome')
       }
     ]
   },

@@ -9,10 +9,10 @@
   </div>
 </template>
 <script>
-import StepOne from 'pages/wizard/StepOne.vue'
-import StepTwo from 'pages/wizard/StepTwo.vue'
-import StepThree from 'pages/wizard/StepThree.vue'
-import StepFour from 'pages/wizard/StepFour.vue'
+import StepOne from 'pages/mu/wizard/StepOne.vue'
+import StepTwo from 'pages/mu/wizard/StepTwo.vue'
+import StepThree from 'pages/mu/wizard/StepThree.vue'
+import StepFour from 'pages/mu/wizard/StepFour.vue'
 
 export default {
   components: {
