@@ -32,7 +32,7 @@
             <q-avatar size="56px" class="q-mb-sm">
               <img alt="Avatar" src="https://cdn.quasar.dev/img/boy-avatar.png">
             </q-avatar>
-            <div class="text-weight-bold">{{ userName }}</div>
+            <div class="text-weight-bold">{{ this.$store.getters['xstore/getUserName'] }}</div>
             <div>@naruto</div>
           </div>
         </q-img>
@@ -47,9 +47,9 @@
   </div>
 </template>
 <script>
-import MessageBox from 'components/MessageBox.vue'
-import LogoutBtn from 'components/LogoutBtn.vue'
-import MainUserMenu from 'components/MainUserMenu.vue'
+import MessageBox from 'components/MessageBox'
+import LogoutBtn from 'components/LogoutBtn'
+import MainUserMenu from 'components/MainUserMenu'
 import OttoAdminMenu from 'components/OttoAdminMenu'
 
 export default {
@@ -61,13 +61,11 @@ export default {
   },
   data () {
     return {
-      userName: '',
       drawer: false
     }
   },
   methods: {},
   mounted () {
-    this.userName = this.$store.getters['xstore/getUserName']
   }
 }
 </script>
