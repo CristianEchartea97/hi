@@ -75,6 +75,10 @@ export default {
         const uploadOut = await this.axios.post(formAttr.action, formData)
         if (uploadOut.status === 204) {
           this.done = true
+          const update = {
+            docId: newDocData.data.docId
+          }
+          await this.api.put('/api/markDocumentAsUploaded', update)
         } else {
           this.$q.notify({
             type: 'negative',
