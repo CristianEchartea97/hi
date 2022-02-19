@@ -5,8 +5,17 @@
     icon="add_comment"
     :done="done"
   >
+    <div class="q-pa-md">
+      <q-linear-progress stripe rounded size="20px" :value="progress" :animation-speed="200" color="cyan"
+                         class="q-mt-sm">
+        <div class="absolute-full flex flex-center">
+          <q-badge color="cyan" text-color="white" :label="progressLabel"/>
+        </div>
+      </q-linear-progress>
+    </div>
     <div v-if="done">
       The file was uploaded successfully.
+      <q-icon name="done"/>
     </div>
 
   </q-step>
@@ -19,7 +28,9 @@ export default {
   },
   data () {
     return {
-      done: false
+      done: false,
+      progress: 0,
+      progressLabel: '0 %'
     }
   },
   watch: {
@@ -72,7 +83,10 @@ export default {
       formData.append('file', this.document, this.document.name)
 
       try {
-        const uploadOut = await this.axios.post(formAttr.action, formData)
+        const config = {
+          onUploadProgress: progressEvent => this.updateProgress(progressEvent)
+        }
+        const uploadOut = await this.axios.post(formAttr.action, formData, config)
         if (uploadOut.status === 204) {
           this.done = true
           const update = {
@@ -92,6 +106,14 @@ export default {
           message: 'There was a problem uploading the file'
         })
       }
+    },
+    updateProgress (progressEvent) {
+      const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+      console.log('percentage' + percentage)
+      this.progressLabel = percentage + ' %'
+      const progressBar = percentage / 100
+      console.log('progressBar' + progressBar)
+      this.progress = progressBar
     }
   }
 }
