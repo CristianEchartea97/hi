@@ -4,10 +4,16 @@
       title="Users"
       :rows="rows"
       :columns="columns"
-      row-key="name"
+      row-key="email"
+      :filter="filter"
     >
       <template v-slot:top-right>
-        <ExportBtn/>
+        <ExportBtn :columns="columns" :rows="rows"/>
+        <q-input class="q-pa-md" borderless dense debounce="300" v-model="filter" placeholder="Search">
+          <template v-slot:append>
+            <q-icon name="search"/>
+          </template>
+        </q-input>
       </template>
     </q-table>
   </div>
@@ -76,7 +82,8 @@ export default {
   data () {
     return {
       columns,
-      rows: []
+      rows: [],
+      filter: ''
     }
   },
   beforeMount () {
