@@ -1,14 +1,20 @@
 <template>
   <div class="q-pa-md">
     <q-table
-      title="Treats"
+      title="Users"
       :rows="rows"
       :columns="columns"
       row-key="name"
-    />
+    >
+      <template v-slot:top-right>
+        <ExportBtn/>
+      </template>
+    </q-table>
   </div>
 </template>
 <script>
+import ExportBtn from 'pages/oa/users/ExportBtn'
+
 const columns = [
   {
     name: 'id',
@@ -64,6 +70,9 @@ const columns = [
   }
 ]
 export default {
+  components: {
+    ExportBtn
+  },
   data () {
     return {
       columns,
