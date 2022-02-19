@@ -5,15 +5,7 @@
     icon="assignment"
     :done="done"
   >
-    <q-circular-progress
-      indeterminate
-      size="90px"
-      :thickness="0.2"
-      color="lime"
-      center-color="grey-8"
-      track-color="transparent"
-      class="q-ma-md"
-    />
+    <q-spinner-grid size="90px" color="teal"/>
   </q-step>
 </template>
 <script>
