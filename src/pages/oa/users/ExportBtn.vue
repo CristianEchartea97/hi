@@ -1,5 +1,6 @@
 <template>
   <q-btn
+    size="sm"
     color="primary"
     icon-right="archive"
     label="Export to csv"

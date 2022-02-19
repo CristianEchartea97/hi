@@ -8,12 +8,12 @@
       :filter="filter"
     >
       <template v-slot:top-right>
-        <ExportBtn :columns="columns" :rows="rows"/>
         <q-input class="q-pa-md" borderless dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
             <q-icon name="search"/>
           </template>
         </q-input>
+        <ExportBtn :columns="columns" :rows="rows"/>
       </template>
     </q-table>
   </div>
