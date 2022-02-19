@@ -97,8 +97,10 @@ export default {
       this.rows = response.data.users
     },
     goToUser (evt, row, index) {
-      console.log(row)
-      console.log(index)
+      this.$router.push({
+        name: 'userInfo',
+        params: { id: index }
+      })
     }
   }
 }

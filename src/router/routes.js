@@ -70,6 +70,11 @@ const routes = [
         path: 'notifications',
         name: 'notificationsHome',
         component: () => import('pages/oa/notifications/NotificationsHome')
+      }, {
+        path: 'user/:id',
+        name: 'userInfo',
+        component: () => import('pages/oa/user/UserInfo'),
+        props: true
       }
     ]
   },
