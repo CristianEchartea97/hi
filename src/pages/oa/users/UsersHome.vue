@@ -6,6 +6,7 @@
       :columns="columns"
       row-key="email"
       :filter="filter"
+      @row-click="goToUser"
     >
       <template v-slot:top-right>
         <q-input class="q-pa-md" borderless dense debounce="300" v-model="filter" placeholder="Search">
@@ -94,6 +95,10 @@ export default {
       const allOut = await this.api.get('/api/oa/users/all')
       const response = allOut.data
       this.rows = response.data.users
+    },
+    goToUser (evt, row, index) {
+      console.log(row)
+      console.log(index)
     }
   }
 }
