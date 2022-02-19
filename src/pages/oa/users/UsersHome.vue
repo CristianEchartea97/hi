@@ -6,6 +6,7 @@
       :columns="columns"
       row-key="email"
       :filter="filter"
+      :loading="loading"
       @row-click="goToUser"
     >
       <template v-slot:top-right>
@@ -84,7 +85,8 @@ export default {
     return {
       columns,
       rows: [],
-      filter: ''
+      filter: '',
+      loading: true
     }
   },
   beforeMount () {
@@ -95,6 +97,7 @@ export default {
       const allOut = await this.api.get('/api/oa/users/all')
       const response = allOut.data
       this.rows = response.data.users
+      this.loading = false
     },
     goToUser (evt, row, index) {
       this.$router.push({
