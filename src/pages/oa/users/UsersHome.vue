@@ -102,7 +102,7 @@ export default {
     goToUser (evt, row, index) {
       this.$router.push({
         name: 'userInfo',
-        params: { id: index }
+        params: { id: row.id }
       })
     }
   }

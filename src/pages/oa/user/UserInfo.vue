@@ -88,8 +88,12 @@ export default {
     this.getUserInfo()
   },
   methods: {
-    getUserInfo () {
+    async getUserInfo () {
       console.log(this.$route.params.id)
+      const id = this.$route.params.id
+      const idOut = await this.api.get(`/api/oa/user/${id}`)
+      const response = idOut.data
+      console.log(response)
     }
   }
 }
