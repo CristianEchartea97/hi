@@ -69,52 +69,12 @@
         </template>
       </q-table>
     </div>
-    <q-dialog v-model="dialogWindow">
-      <q-card>
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">Job #{{ this.job.id }}
-            <q-icon name="fitness_center"/>
-          </div>
-          <q-space/>
-          <q-btn icon="close" flat round dense v-close-popup/>
-        </q-card-section>
-        <q-card-section>
-          <div class="q-pa-md">
-            <div class="row q-gutter-md" style="min-width: 450px">
-              <div class="col-sm-12 col-md-4">
-                <q-input readonly borderless v-model="this.job.created_at" label="Created"/>
-              </div>
-              <div class="col-sm-12 col-md-4">
-                <q-input readonly borderless v-model="this.job.clicks" label="Clicks"/>
-              </div>
-              <div class="col-sm-12 col-md-4">
-                <q-input readonly borderless v-model="this.job.state" label="State"/>
-              </div>
-              <div class="col-sm-12 col-md-4">
-                <q-input readonly borderless v-model="this.job.size" label="Size(MB)"/>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-4">
-              <q-input readonly borderless v-model="this.job.name" label="Name"/>
-            </div>
-            <div class="col-sm-12 col-md-4">
-              <q-input readonly borderless v-model="this.job.location" label="Location"/>
-            </div>
-            <div class="col-sm-12 col-md-4">
-              <q-input readonly borderless v-model="this.job.type" label="Type"/>
-            </div>
-            <div class="row">
-              <div class="col-sm-12 col-md-4">
-                <q-btn label="Download File" color="secondary"/>
-              </div>
-            </div>
-          </div>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+    <JobDetails :dialog-window="dialogWindow" :jobId="jobId" @windowClosed="dialogWindow=!dialogWindow"/>
   </div>
 </template>
 <script>
+import JobDetails from 'pages/oa/user/JobDetails'
+
 const columns = [
   {
     name: 'id',
@@ -172,19 +132,10 @@ const columns = [
   }
 ]
 export default {
+  components: { JobDetails },
   data () {
     return {
-      job: {
-        id: null,
-        clicks: null,
-        created_at: null,
-        updated_at: null,
-        state: null,
-        name: null,
-        location: null,
-        size: null,
-        type: null
-      },
+      jobId: null,
       dialogWindow: false,
       loading: false,
       filter: null,
@@ -208,10 +159,8 @@ export default {
   methods: {
     async showJob (evt, row, index) {
       this.dialogWindow = true
-      this.job.id = row.id
-      const jobOut = await this.api.get(`/api/oa/job/${this.job.id}`)
-      const response = jobOut.data
-      this.job = response.data.job
+      this.jobId = row.id
+      console.log('showing ' + this.jobId)
     },
     async goBack () {
       await this.$router.back()
