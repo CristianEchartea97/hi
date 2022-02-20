@@ -79,9 +79,18 @@
           <q-btn icon="close" flat round dense v-close-popup/>
         </q-card-section>
         <q-card-section>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet
-          porro.
-          Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+          <div class="q-pa-md">
+            <div class="row q-gutter-md" style="min-width: 450px">
+              <div class="col-sm-12 col-md-12">
+                <q-input readonly borderless v-model="this.user.created" label="Created"/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-4">
+                <q-btn label="Download File" color="secondary"/>
+              </div>
+            </div>
+          </div>
         </q-card-section>
       </q-card>
     </q-dialog>
