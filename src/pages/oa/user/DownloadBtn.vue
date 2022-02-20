@@ -16,8 +16,12 @@ export default {
     return {}
   },
   methods: {
-    downloadFile () {
-      console.log('Download file ' + this.docId)
+    async downloadFile () {
+      const fileOut = await this.api.get(`/api/oa/doc/${this.docId}`)
+      const response = fileOut.data
+      const url = response.data.url
+      console.log(url)
+      window.open(url)
     }
   }
 }
