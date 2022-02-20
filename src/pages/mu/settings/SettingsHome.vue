@@ -88,6 +88,11 @@ export default {
         accept.value = false
       }
     }
+  },
+  methods: {
+    isPwd () {
+      return this.password.value === null
+    }
   }
 }
 </script>

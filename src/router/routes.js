@@ -49,6 +49,11 @@ const routes = [
         path: 'my-settings',
         name: 'settingsHome',
         component: () => import('pages/mu/settings/SettingsHome')
+      },
+      {
+        path: 'jobs',
+        name: 'jobsHome',
+        component: () => import('pages/mu/jobs/Jobs')
       }
     ]
   },
