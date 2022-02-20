@@ -1,27 +1,29 @@
 <template>
   <div class="q-pa-md">
-    <h3>Info User#{{ this.id }}</h3>
+    <div class="row">
+      <h4>Info User#{{ this.user.id }}</h4>
+    </div>
     <div class="row q-gutter-md">
       <div class="col-ld-12 col-md-3">
-        <q-input v-model="name" label="Name"/>
+        <q-input v-model="this.user.name" label="Name"/>
       </div>
       <div class="col-sm-12 col-md-1">
-        <q-input readonly borderless v-model="role" label="Role"/>
+        <q-input readonly borderless v-model="this.user.role" label="Role"/>
       </div>
       <div class="col-sm-12 col-md-2">
-        <q-input readonly borderless v-model="verified" label="Verified"/>
+        <q-input readonly borderless v-model="this.user.verified" label="Verified"/>
       </div>
       <div class="col-sm-12 col-md-2">
-        <q-input readonly borderless v-model="created" label="Created"/>
+        <q-input readonly borderless v-model="this.user.created" label="Created"/>
       </div>
       <div class="col-sm-12 col-md-2">
-        <q-input readonly borderless v-model="last_login" label="Last Login"/>
+        <q-input readonly borderless v-model="this.user.last_login" label="Last Login"/>
       </div>
       <div class="col-sm-12 col-md-1">
         <q-toggle class="q-pt-lg"
-                  v-model="enabled"
+                  v-model="this.user.enabled"
                   checked-icon="check"
-                  :color="(enabled)?'green':'red'"
+                  :color="(this.user.enabled)?'green':'red'"
                   unchecked-icon="clear"
                   keep-color
         />
@@ -29,7 +31,7 @@
     </div>
     <div class="row">
       <div class="col-ld-12 col-md-3">
-        <q-input type="password" v-model="password" label="New Password">
+        <q-input type="password" v-model="this.user.password" label="New Password">
           <template v-slot:append>
             <q-icon name="lock" color="secondary"/>
           </template>
@@ -43,6 +45,28 @@
       <div class="col-xl-12 col-md-1 q-mt-lg">
         <q-btn @click="goBack" size="md" color="secondary" label="Back"/>
       </div>
+    </div>
+    <div class="row">
+      <h4>User Jobs</h4>
+    </div>
+    <div class="row">
+      <q-table
+        class="col-sm-12"
+        title="Users"
+        :rows="rows"
+        :columns="columns"
+        row-key="email"
+        :filter="filter"
+        :loading="loading"
+      >
+        <template v-slot:top-right>
+          <q-input class="q-pa-md" borderless dense debounce="300" v-model="filter" placeholder="Search">
+            <template v-slot:append>
+              <q-icon name="search"/>
+            </template>
+          </q-input>
+        </template>
+      </q-table>
     </div>
   </div>
 </template>
@@ -125,16 +149,20 @@ const rows = [
 export default {
   data () {
     return {
+      loading: false,
+      filter: null,
       columns,
       rows,
-      id: null,
-      password: null,
-      name: null,
-      role: null,
-      verified: null,
-      created: null,
-      last_login: null,
-      enabled: false
+      user: {
+        id: null,
+        password: null,
+        name: null,
+        role: null,
+        verified: null,
+        created: null,
+        last_login: null,
+        enabled: false
+      }
     }
   },
   beforeMount () {
@@ -149,16 +177,19 @@ export default {
     },
     async getUserInfo () {
       console.log(this.$route.params.id)
-      this.id = this.$route.params.id
-      const idOut = await this.api.get(`/api/oa/user/${this.id}`)
+      this.user.id = this.$route.params.id
+      this.loading = true
+      const idOut = await this.api.get(`/api/oa/user/${this.user.id}`)
       const response = idOut.data
       const user = response.data.user
-      this.enabled = (user.enabled === 1)
-      this.name = user.name
-      this.role = user.role
-      this.verified = user.email_verified_at
-      this.created = user.created_at
-      this.last_login = user.last_login
+      this.user.enabled = (user.enabled === 1)
+      this.user.name = user.name
+      this.user.role = user.role
+      this.user.verified = user.email_verified_at
+      this.user.created = user.created_at
+      this.user.last_login = user.last_login
+      this.rows = response.data.jobs
+      this.loading = false
       console.log(response)
     }
   }
