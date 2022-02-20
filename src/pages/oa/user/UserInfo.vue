@@ -1,5 +1,35 @@
 <template>
-  <h1>user Info</h1>
+  <div class="q-pa-md">
+    <h3>user Info</h3>
+    <div class="row q-gutter-md">
+      <div class="col-ld-12 col-md-3">
+        <q-input v-model="name" label="Name"/>
+      </div>
+      <div class="col-sm-12 col-md-1">
+        <q-input  eadonly borderless v-model="role" label="Role"/>
+      </div>
+      <div class="col-sm-12 col-md-2">
+        <q-input readonly borderless  v-model="verified" label="Verified"/>
+      </div>
+      <div class="col-sm-12 col-md-2">
+        <q-input readonly borderless  v-model="created" label="Created"/>
+      </div>
+      <div class="col-sm-12 col-md-2">
+        <q-input readonly borderless  v-model="last_login" label="Last Login"/>
+      </div>
+      <div class="col-sm-12 col-md-1">
+        <q-toggle class="q-pt-lg"
+                  v-model="enabled"
+                  checked-icon="check"
+                  :color="(enabled)?'green':'red'"
+                  unchecked-icon="clear"
+                  keep-color
+        />
+      </div>
+    </div>
+    <div class="row">
+    </div>
+  </div>
 </template>
 <script>
 const columns = [
@@ -81,7 +111,13 @@ export default {
   data () {
     return {
       columns,
-      rows
+      rows,
+      name: null,
+      role: null,
+      verified: null,
+      created: null,
+      last_login: null,
+      enabled: false
     }
   },
   beforeMount () {
@@ -93,6 +129,13 @@ export default {
       const id = this.$route.params.id
       const idOut = await this.api.get(`/api/oa/user/${id}`)
       const response = idOut.data
+      const user = response.data.user
+      this.enabled = (user.enabled === 1)
+      this.name = user.name
+      this.role = user.role
+      this.verified = user.email_verified_at
+      this.created = user.created_at
+      this.last_login = user.last_login
       console.log(response)
     }
   }
