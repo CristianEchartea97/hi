@@ -39,10 +39,10 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xl-12 col-md-1 q-mt-lg">
-        <q-btn @click="updateInfo" size="md" color="primary" label="Save"/>
+      <div class="col-sm-4 col-md-1 q-mt-lg">
+        <q-btn @click="updateInfo"  size="md" color="primary" label="Save"/>
       </div>
-      <div class="col-xl-12 col-md-1 q-mt-lg">
+      <div class="col-sm-4 col-md-1 q-mt-lg">
         <q-btn @click="goBack" size="md" color="secondary" label="Back"/>
       </div>
     </div>
