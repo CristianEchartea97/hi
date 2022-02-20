@@ -20,7 +20,6 @@ export default {
       const fileOut = await this.api.get(`/api/oa/doc/${this.docId}`)
       const response = fileOut.data
       const url = response.data.url
-      console.log(url)
       window.open(url)
     }
   }
