@@ -40,7 +40,7 @@
     </div>
     <div class="row">
       <div class="col-sm-4 col-md-1 q-mt-lg">
-        <q-btn @click="updateInfo"  size="md" color="primary" label="Save"/>
+        <q-btn @click="updateInfo" size="md" color="primary" label="Save"/>
       </div>
       <div class="col-sm-4 col-md-1 q-mt-lg">
         <q-btn @click="goBack" size="md" color="secondary" label="Back"/>
@@ -58,6 +58,7 @@
         row-key="email"
         :filter="filter"
         :loading="loading"
+        @row-click="showJob"
       >
         <template v-slot:top-right>
           <q-input class="q-pa-md" borderless dense debounce="300" v-model="filter" placeholder="Search">
@@ -69,6 +70,21 @@
       </q-table>
     </div>
   </div>
+  <q-dialog v-model="dialogWindow">
+    <q-card>
+      <q-card-section class="row items-center q-pb-none">
+        <div class="text-h6">Job #{{ this.job.id }}
+          <q-icon name="fitness_center"/>
+        </div>
+        <q-space/>
+        <q-btn icon="close" flat round dense v-close-popup/>
+      </q-card-section>
+      <q-card-section>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro.
+        Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 <script>
 const columns = [
@@ -127,32 +143,17 @@ const columns = [
     sortable: true
   }
 ]
-const rows = [
-  {
-    id: 42,
-    created_at: '2022-02-19 22:25:29',
-    jobState: 'QUEUED',
-    document: 'dummy-document.data',
-    uploaded: 1,
-    size: 52428800,
-    clicks: 0
-  },
-  {
-    id: 41,
-    created_at: '2022-02-19 19:18:30',
-    jobState: 'PREPARING',
-    document: 'dummy-document.data',
-    uploaded: 1,
-    size: 52428800,
-    clicks: 0
-  }]
 export default {
   data () {
     return {
+      job: {
+        id: null
+      },
+      dialogWindow: false,
       loading: false,
       filter: null,
       columns,
-      rows,
+      rows: [],
       user: {
         id: null,
         password: null,
@@ -169,6 +170,10 @@ export default {
     this.getUserInfo()
   },
   methods: {
+    showJob (evt, row, index) {
+      this.dialogWindow = true
+      this.job.id = row.id
+    },
     async goBack () {
       await this.$router.back()
     },
