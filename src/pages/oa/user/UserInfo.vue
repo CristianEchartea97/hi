@@ -69,22 +69,23 @@
         </template>
       </q-table>
     </div>
+    <q-dialog v-model="dialogWindow">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">Job #{{ this.job.id }}
+            <q-icon name="fitness_center"/>
+          </div>
+          <q-space/>
+          <q-btn icon="close" flat round dense v-close-popup/>
+        </q-card-section>
+        <q-card-section>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet
+          porro.
+          Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
-  <q-dialog v-model="dialogWindow">
-    <q-card>
-      <q-card-section class="row items-center q-pb-none">
-        <div class="text-h6">Job #{{ this.job.id }}
-          <q-icon name="fitness_center"/>
-        </div>
-        <q-space/>
-        <q-btn icon="close" flat round dense v-close-popup/>
-      </q-card-section>
-      <q-card-section>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro.
-        Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
-      </q-card-section>
-    </q-card>
-  </q-dialog>
 </template>
 <script>
 const columns = [
@@ -181,10 +182,9 @@ export default {
       console.log('Updating')
     },
     async getUserInfo () {
-      console.log(this.$route.params.id)
       this.user.id = this.$route.params.id
       this.loading = true
-      const idOut = await this.api.get(`/api/oa/user/${this.user.id}`)
+      const idOut = await this.api.get(`/api/oa/user/${this.$route.params.id}`)
       const response = idOut.data
       const user = response.data.user
       this.user.enabled = (user.enabled === 1)
