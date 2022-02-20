@@ -167,6 +167,23 @@ export default {
     },
     async updateInfo () {
       console.log('Updating')
+      const payload = {
+        id: this.user.id,
+        name: this.user.name,
+        pass: this.user.password
+      }
+      const out = await this.api.put('/api/oa/user/update', payload)
+      if (out.status === 200) {
+        this.$q.notify({
+          message: 'Update was successful.',
+          color: 'secondary'
+        })
+      } else {
+        this.$q.notify({
+          message: 'Update failed.',
+          color: 'warning'
+        })
+      }
     },
     async getUserInfo () {
       this.user.id = this.$route.params.id
