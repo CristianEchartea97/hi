@@ -81,9 +81,27 @@
         <q-card-section>
           <div class="q-pa-md">
             <div class="row q-gutter-md" style="min-width: 450px">
-              <div class="col-sm-12 col-md-12">
-                <q-input readonly borderless v-model="this.user.created" label="Created"/>
+              <div class="col-sm-12 col-md-4">
+                <q-input readonly borderless v-model="this.job.created_at" label="Created"/>
               </div>
+              <div class="col-sm-12 col-md-4">
+                <q-input readonly borderless v-model="this.job.clicks" label="Clicks"/>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <q-input readonly borderless v-model="this.job.state" label="State"/>
+              </div>
+              <div class="col-sm-12 col-md-4">
+                <q-input readonly borderless v-model="this.job.size" label="Size(MB)"/>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <q-input readonly borderless v-model="this.job.name" label="Name"/>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <q-input readonly borderless v-model="this.job.location" label="Location"/>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <q-input readonly borderless v-model="this.job.type" label="Type"/>
             </div>
             <div class="row">
               <div class="col-sm-12 col-md-4">
@@ -157,7 +175,15 @@ export default {
   data () {
     return {
       job: {
-        id: null
+        id: null,
+        clicks: null,
+        created_at: null,
+        updated_at: null,
+        state: null,
+        name: null,
+        location: null,
+        size: null,
+        type: null
       },
       dialogWindow: false,
       loading: false,
@@ -180,9 +206,12 @@ export default {
     this.getUserInfo()
   },
   methods: {
-    showJob (evt, row, index) {
+    async showJob (evt, row, index) {
       this.dialogWindow = true
       this.job.id = row.id
+      const jobOut = await this.api.get(`/api/oa/job/${this.job.id}`)
+      const response = jobOut.data
+      this.job = response.data.job
     },
     async goBack () {
       await this.$router.back()
