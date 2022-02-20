@@ -26,11 +26,11 @@
         </q-scroll-area>
 
         <q-img class="absolute-top"
-               src="https://cdn.quasar.dev/img/material.png"
+               :src="this.$store.getters['xstore/getBackground']"
                style="height: 150px">
           <div class="absolute-bottom bg-transparent">
             <q-avatar size="56px" class="q-mb-sm">
-              <img alt="Avatar" src="https://cdn.quasar.dev/img/boy-avatar.png">
+              <img alt="Avatar" :src="this.$store.getters['xstore/getAvatar']">
             </q-avatar>
             <div class="text-weight-bold">{{ this.$store.getters['xstore/getUserName'] }}</div>
             <div>@naruto</div>

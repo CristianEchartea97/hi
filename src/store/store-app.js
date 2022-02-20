@@ -6,11 +6,19 @@ const state = {
   userName: '',
   role: '',
   notifications: 0,
-  homePage: ''
+  homePage: '',
+  avatar: null,
+  background: null
 }
 
 // synchronous actions
 const mutations = {
+  setAvatar (state, value) {
+    state.avatar = value
+  },
+  setBackground (state, value) {
+    state.background = value
+  },
   setHomePage (state, value) {
     let homePage
     switch (value) {
@@ -42,6 +50,12 @@ const mutations = {
 }
 
 const getters = {
+  getAvatar: (state) => {
+    return state.avatar
+  },
+  getBackground: (state) => {
+    return state.background
+  },
   getHomePage: (state) => {
     return state.homePage
   },
@@ -67,6 +81,8 @@ const actions = {
     const output = await api.post('/api/login', payload)
     const response = output.data
     if (response.success) {
+      context.commit('setAvatar', response.data.avatar)
+      context.commit('setBackground', response.data.background)
       context.commit('setToken', response.data.token)
       context.commit('setUserName', response.data.name)
       context.commit('setRole', response.data.role)
@@ -83,6 +99,8 @@ const actions = {
     context.commit('setNotifications', response.data.notifications)
   },
   logout (context) {
+    context.commit('setAvatar', null)
+    context.commit('setBackground', null)
     context.commit('setToken', null)
     context.commit('setAuthenticated', false)
     context.commit('setNotifications', 0)
