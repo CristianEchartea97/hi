@@ -21,6 +21,7 @@
       </div>
       <div class="col-sm-12 col-md-1">
         <q-toggle class="q-pt-lg"
+                  label="Enabled"
                   v-model="this.user.enabled"
                   checked-icon="check"
                   :color="(this.user.enabled)?'green':'red'"
@@ -29,13 +30,16 @@
         />
       </div>
     </div>
-    <div class="row">
+    <div class="row q-gutter-md">
       <div class="col-ld-12 col-md-3">
         <q-input type="password" v-model="this.user.password" label="New Password">
           <template v-slot:append>
             <q-icon name="lock" color="secondary"/>
           </template>
         </q-input>
+      </div>
+      <div class="col-sm-12 col-md-3">
+        <q-input readonly borderless v-model="this.user.email" label="Email"/>
       </div>
     </div>
     <div class="row">
@@ -145,6 +149,7 @@ export default {
         id: null,
         password: null,
         name: null,
+        email: null,
         role: null,
         verified: null,
         created: null,
@@ -170,6 +175,7 @@ export default {
       const payload = {
         id: this.user.id,
         name: this.user.name,
+        enabled: this.user.enabled,
         pass: this.user.password
       }
       const out = await this.api.put('/api/oa/user/update', payload)
@@ -193,6 +199,7 @@ export default {
       const user = response.data.user
       this.user.enabled = (user.enabled === 1)
       this.user.name = user.name
+      this.user.email = user.email
       this.user.role = user.role
       this.user.verified = user.email_verified_at
       this.user.created = user.created_at
