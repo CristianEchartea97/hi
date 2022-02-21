@@ -32,14 +32,6 @@
         Settings
       </q-item-section>
     </q-item>
-    <q-item :to="{ name: 'jobsHome' }" clickable v-ripple exact>
-      <q-item-section avatar>
-        <q-icon name="style"/>
-      </q-item-section>
-      <q-item-section>
-        Jobs
-      </q-item-section>
-    </q-item>
   </q-list>
 </template>
 <script>
