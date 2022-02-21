@@ -4,6 +4,7 @@
       <h4>Info User#{{ this.user.id }}</h4>
     </div>
     <div class="row q-gutter-md">
+      <q-img alt="user picture" :src="this.user.avatar" style="height: 60px; max-width: 60px"/>
       <div class="col-ld-12 col-md-3">
         <q-input v-model="this.user.name" label="Name"/>
       </div>
@@ -149,6 +150,7 @@ export default {
         id: null,
         password: null,
         name: null,
+        avatar: null,
         email: null,
         role: null,
         verified: null,
@@ -199,6 +201,7 @@ export default {
       const user = response.data.user
       this.user.enabled = (user.enabled === 1)
       this.user.name = user.name
+      this.user.avatar = user.avatar
       this.user.email = user.email
       this.user.role = user.role
       this.user.verified = user.email_verified_at
