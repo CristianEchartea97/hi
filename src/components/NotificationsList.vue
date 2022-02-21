@@ -1,6 +1,6 @@
 <template>
   <q-menu transition-show="jump-down">
-    <q-list bordered class="rounded-borders" style="max-width: 650px; min-width: 650px">
+    <q-list bordered class="rounded-borders" style="max-width: 750px; min-width: 650px">
       <q-item-label header>Notifications</q-item-label>
       <q-item v-show="working">
         <q-spinner-dots
@@ -12,7 +12,7 @@
         <q-item clickable v-ripple @click="showMessage(notification)">
           <q-item-section avatar>
             <q-avatar>
-              <q-img alt="avatar" :src=notification.avatar></q-img>
+              <q-img alt="avatar" :src="notification.avatar"/>
             </q-avatar>
           </q-item-section>
           <q-item-section>
