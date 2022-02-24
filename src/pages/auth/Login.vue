@@ -5,6 +5,7 @@
         <!-- form column-->
         <q-page-container class="cona q-pa-xl col-12 col-lg-4 row items-center">
           <q-form @submit.prevent="submit" class="bg-white q-pa-md col-all">
+            <q-badge>{{ this.appVersion }}</q-badge>
             <q-input
               v-model="form.email"
               type="email"
@@ -102,7 +103,7 @@ export default {
                 const homePage = this.$store.getters['xstore/getHomePage']
                 this.$router.push({ name: homePage })
               }
-            }, 700)
+            }, 100)
           })
         } catch (err) {
           this.error = true
@@ -114,7 +115,6 @@ export default {
       }
     },
     doRegister () {
-      console.log('in do register')
       this.$router.push({ name: 'signup' })
     }
   },
