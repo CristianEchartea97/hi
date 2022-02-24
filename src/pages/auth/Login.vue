@@ -5,7 +5,11 @@
         <!-- form column-->
         <q-page-container class="cona q-pa-xl col-12 col-lg-4 row items-center">
           <q-form @submit.prevent="submit" class="bg-white q-pa-md col-all">
-            <q-badge>{{ this.appVersion }}</q-badge>
+            <div class="text-h5">
+              Ottito Client
+              <q-badge align="top">app v{{ this.appVersion }}</q-badge>
+            </div>
+            <q-separator/>
             <q-input
               v-model="form.email"
               type="email"
