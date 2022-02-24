@@ -93,13 +93,16 @@ export default {
             docId: newDocData.data.docId
           }
           await this.api.put('/api/markDocumentAsUploaded', update)
+          await this.$router.push({
+            name: 'jobAnalysis',
+            params: { id: payload.jobId }
+          })
         } else {
           this.$q.notify({
             type: 'negative',
             message: 'There was a problem uploading the file'
           })
         }
-        console.log(uploadOut)
       } catch (error) {
         this.$q.notify({
           type: 'negative',
