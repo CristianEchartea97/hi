@@ -10,8 +10,8 @@ yarn or npm install
 
 Configure the backend API
 
-    src/boot/axios.js
-    # baseURL: 'http://150.136.182.124:8081/'
+    cp quasar.env.example quasar.env
+    # user the file with the appropriate information
 
 to whatever the new back-end is hosted, for now there is no support for `.env` properties (WIP)
 
