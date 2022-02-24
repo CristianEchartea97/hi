@@ -1,6 +1,6 @@
 {
   "name": "otto-io-fe",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "FrontEnd for OTTOio",
   "productName": "OttoIO",
   "author": "Frederick Alvarez <hk.fred.0@gmail.com>",
@@ -26,6 +26,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",
     "@quasar/app": "^3.0.0",
+    "@quasar/quasar-app-extension-qenv": "^1.1.0",
     "eslint": "^7.14.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.19.1",

@@ -1,8 +1,9 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
+import packageInfo from '../../package.json'
 
 const api = axios.create({
-  baseURL: 'http://150.136.182.124:8081/'
+  baseURL: `${process.env.OTTO_BACKEND_PROTOCOL}://${process.env.OTTO_BACKEND_ADDRESS}:${process.env.OTTO_BACKEND_PORT}/`
 })
 
 const externalApi = axios.create()
@@ -13,6 +14,7 @@ export default boot(({
   store
 }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
+  app.config.globalProperties.applicationVersion = packageInfo.version
   app.config.globalProperties.api = api
   app.config.globalProperties.axios = externalApi
   app.config.globalProperties.author = 'donhk'

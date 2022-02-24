@@ -1,6 +1,7 @@
 import { api } from 'boot/axios'
 
 const state = {
+  clientVersion: null,
   token: '',
   authenticated: false,
   userName: '',
@@ -13,6 +14,9 @@ const state = {
 
 // synchronous actions
 const mutations = {
+  setClientVersion (state, value) {
+    state.clientVersion = value
+  },
   setAvatar (state, value) {
     state.avatar = value
   },
@@ -50,6 +54,9 @@ const mutations = {
 }
 
 const getters = {
+  getClientVersion: (state) => {
+    return state.clientVersion
+  },
   getAvatar: (state) => {
     return state.avatar
   },
@@ -77,6 +84,9 @@ const getters = {
 }
 
 const actions = {
+  updateAppVersion (context, payload) {
+    context.commit('setClientVersion', payload)
+  },
   async login (context, payload) {
     const output = await api.post('/api/login', payload)
     const response = output.data
@@ -99,6 +109,7 @@ const actions = {
     context.commit('setNotifications', response.data.notifications)
   },
   logout (context) {
+    context.commit('setClientVersion', null)
     context.commit('setAvatar', null)
     context.commit('setBackground', null)
     context.commit('setToken', null)

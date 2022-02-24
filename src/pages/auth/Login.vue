@@ -5,6 +5,7 @@
         <!-- form column-->
         <q-page-container class="cona q-pa-xl col-12 col-lg-4 row items-center">
           <q-form @submit.prevent="submit" class="bg-white q-pa-md col-all">
+            <q-badge>{{ this.appVersion }}</q-badge>
             <q-input
               v-model="form.email"
               type="email"
@@ -72,6 +73,7 @@ export default {
   name: 'login',
   data () {
     return {
+      appVersion: this.applicationVersion,
       form: {
         email: '',
         password: ''
@@ -95,13 +97,14 @@ export default {
           this.$store.dispatch('xstore/login', this.form).then(() => {
             setTimeout(() => {
               if (this.$store.getters['xstore/isAuthenticated']) {
+                this.$store.dispatch('xstore/updateAppVersion', this.appVersion)
                 this.working = false
                 const token = this.$store.getters['xstore/getToken']
                 this.api.defaults.headers.common.Authorization = 'Bearer ' + token
                 const homePage = this.$store.getters['xstore/getHomePage']
                 this.$router.push({ name: homePage })
               }
-            }, 700)
+            }, 100)
           })
         } catch (err) {
           this.error = true
@@ -113,7 +116,6 @@ export default {
       }
     },
     doRegister () {
-      console.log('in do register')
       this.$router.push({ name: 'signup' })
     }
   },
