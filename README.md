@@ -24,6 +24,14 @@ QENV=development quasar dev
 QENV=test quasar dev
 ```
 
+### Version update
+
+After every version execute
+
+```bash
+npm version patch
+```
+
 ### Lint the files
 
 ```bash
