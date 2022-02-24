@@ -107,6 +107,7 @@ const actions = {
     context.commit('setNotifications', response.data.notifications)
   },
   logout (context) {
+    context.commit('setClientVersion', null)
     context.commit('setAvatar', null)
     context.commit('setBackground', null)
     context.commit('setToken', null)
