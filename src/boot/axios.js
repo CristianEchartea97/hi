@@ -2,7 +2,7 @@ import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://150.136.182.124:8081/'
+  baseURL: `${process.env.OTTO_BACKEND_PROTOCOL}://${process.env.OTTO_BACKEND_ADDRESS}:${process.env.OTTO_BACKEND_PORT}/`
 })
 
 const externalApi = axios.create()

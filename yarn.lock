@@ -1518,6 +1518,14 @@
     untildify "^4.0.0"
     update-notifier "^4.1.0"
 
+"@quasar/quasar-app-extension-qenv@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@quasar/quasar-app-extension-qenv/-/quasar-app-extension-qenv-1.1.0.tgz#e636a428bb324069b64ddabe67d7c99400ebaf64"
+  integrity sha512-4VP27GHNXSTIGMCqOLTyos487CsKacUKmTNs6B1rHN15FiiU0ore08WGuIy89d7qG4IJrO/OHkgrbso9UhyJuw==
+  dependencies:
+    fs-extra "^9.1.0"
+    semver "^7.3.4"
+
 "@quasar/ssr-helpers@2.1.1":
   version "2.1.1"
   resolved "https://registry.npmjs.org/@quasar/ssr-helpers/-/ssr-helpers-2.1.1.tgz"
@@ -4405,7 +4413,7 @@ fs-extra@10.0.0:
     jsonfile "^6.0.1"
     universalify "^2.0.0"
 
-fs-extra@^9.0.0:
+fs-extra@^9.0.0, fs-extra@^9.1.0:
   version "9.1.0"
   resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz"
   integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
