@@ -12,22 +12,36 @@
       />
     </div>
     <div class="col" style="min-width: 80%">
-      <q-linear-progress stripe size="25px" :value="50" color="primary">
+      <q-linear-progress stripe size="25px" :value="this.progress" color="primary" :animation-speed="300">
         <div class="absolute-full flex flex-center">
-          <q-badge color="white" text-color="primary" label="50%"/>
+          <q-badge color="white" text-color="primary" :label="this.progressStr"/>
         </div>
       </q-linear-progress>
     </div>
     <div class="col">
-      QUEUED
+      In_PROGRESS
     </div>
   </div>
 </template>
 <script>
 export default {
   data () {
-    return {}
+    return {
+      timer: null,
+      progress: 0.0,
+      progressStr: '0%'
+    }
   },
-  methods: {}
+  methods: {},
+  mounted: function () {
+    this.timer = setInterval(() => {
+      if (this.progress >= 1) {
+        this.progress = 1
+        clearInterval(this.timer)
+      }
+      this.progress += 0.003
+      this.progressStr = (Math.round(this.progress * 100)) + '%'
+    }, 1000)
+  }
 }
 </script>
