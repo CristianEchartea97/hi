@@ -97,6 +97,7 @@ export default {
           this.$store.dispatch('xstore/login', this.form).then(() => {
             setTimeout(() => {
               if (this.$store.getters['xstore/isAuthenticated']) {
+                this.$store.dispatch('xstore/updateAppVersion', this.appVersion)
                 this.working = false
                 const token = this.$store.getters['xstore/getToken']
                 this.api.defaults.headers.common.Authorization = 'Bearer ' + token

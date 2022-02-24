@@ -84,11 +84,13 @@ const getters = {
 }
 
 const actions = {
+  updateAppVersion (context, payload) {
+    context.commit('setClientVersion', payload)
+  },
   async login (context, payload) {
     const output = await api.post('/api/login', payload)
     const response = output.data
     if (response.success) {
-      context.commit('setClientVersion', this.applicationVersion)
       context.commit('setAvatar', response.data.avatar)
       context.commit('setBackground', response.data.background)
       context.commit('setToken', response.data.token)
