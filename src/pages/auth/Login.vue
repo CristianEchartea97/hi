@@ -72,6 +72,7 @@ export default {
   name: 'login',
   data () {
     return {
+      appVersion: this.applicationVersion,
       form: {
         email: '',
         password: ''
