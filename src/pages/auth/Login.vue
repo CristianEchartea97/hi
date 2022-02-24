@@ -21,8 +21,7 @@
               :rules="[ val => val && val.length > 0 || 'Password cannot be empty']"
             />
             <q-btn :disable="btnAction" class="q-mt-lg" label="Login" type="submit" lazy-rules
-                   color="primary">
-            </q-btn>
+                   color="primary"/>
             <q-btn :disable="btnAction" class="q-mt-lg" label="Register" type="submit" lazy-rules
                    color="accent"
                    flat @click="doRegister"
@@ -85,7 +84,7 @@ export default {
     }
   },
   methods: {
-    submit () {
+    async submit () {
       this.btnAction = true
       if (!this.form.email || !this.form.password) {
         console.log('something wrong')
@@ -94,24 +93,26 @@ export default {
       } else {
         try {
           this.working = true
-          this.$store.dispatch('xstore/login', this.form).then(() => {
-            setTimeout(() => {
-              if (this.$store.getters['xstore/isAuthenticated']) {
-                this.$store.dispatch('xstore/updateAppVersion', this.appVersion)
-                this.working = false
-                const token = this.$store.getters['xstore/getToken']
-                this.api.defaults.headers.common.Authorization = 'Bearer ' + token
-                const homePage = this.$store.getters['xstore/getHomePage']
-                this.$router.push({ name: homePage })
-              }
-            }, 100)
-          })
+          await this.$store.dispatch('xstore/login', this.form)
+          console.log('this.working ' + this.working)
+          if (!this.$store.getters['xstore/isAuthenticated']) {
+            this.error = true
+            this.alert = 'error'
+            return
+          }
+          await this.$store.dispatch('xstore/updateAppVersion', this.appVersion)
+          const token = this.$store.getters['xstore/getToken']
+          this.api.defaults.headers.common.Authorization = 'Bearer ' + token
+          const homePage = this.$store.getters['xstore/getHomePage']
+          await this.$router.push({ name: homePage })
         } catch (err) {
           this.error = true
           this.alert = 'error'
           this.form.email = ''
           this.form.password = ''
           this.btnAction = false
+        } finally {
+          this.working = false
         }
       }
     },
