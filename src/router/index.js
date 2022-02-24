@@ -6,6 +6,7 @@ import {
   createWebHistory
 } from 'vue-router'
 import routes from './routes'
+import packageInfo from '../../package.json'
 
 /*
  * If not building with SSR mode, you can
@@ -32,6 +33,18 @@ export default route(function ({ store }) {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE)
+  })
+
+  // if the user is already authenticated with a previous version of the app, redirect it to home
+  Router.beforeEach((to, from, next) => {
+    const isAuthenticated = store.getters['xstore/isAuthenticated']
+    const clientMismatch = store.getters['xstore/getClientVersion'] !== packageInfo.version
+    if (isAuthenticated && clientMismatch) {
+      store.dispatch('xstore/logout')
+      next()
+    } else {
+      next()
+    }
   })
 
   // if the user is already authenticated redirect them to home
