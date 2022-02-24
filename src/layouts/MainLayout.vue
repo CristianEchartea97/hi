@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <q-layout view="lHh Lpr lff">
-      <q-header elevated class="bg-cyan-8">
+      <q-header elevated>
         <q-toolbar>
           <q-toolbar-title @click="drawer=!drawer">
             OTTO App

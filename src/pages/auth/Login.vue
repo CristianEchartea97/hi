@@ -22,7 +22,7 @@
             />
             <q-btn :disable="btnAction" class="q-mt-lg" label="Login" type="submit" lazy-rules
                    color="primary"/>
-            <q-btn :disable="btnAction" class="q-mt-lg" label="Register" type="submit" lazy-rules
+            <q-btn :disable="btnAction" class="q-mt-lg" text-color="secondary" label="Register" type="submit" lazy-rules
                    color="accent"
                    flat @click="doRegister"
             />
