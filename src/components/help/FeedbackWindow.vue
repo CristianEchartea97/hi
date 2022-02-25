@@ -4,20 +4,27 @@
       <q-card-section>
         <div class="text-h6">Feedback Window</div>
       </q-card-section>
-
       <q-separator/>
-
-      <q-card-section style="max-height: 50vh" class="scroll">
-        <p v-for="n in 15" :key="n">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit
-          voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem
-          aut, natus minima, porro labore.</p>
+      <q-card-section style="max-height: 60vh" class="scroll">
+        <div class="q-pa-md" style="max-width: 400px">
+          <div class="q-gutter-md">
+            <q-select v-model="model" :options="options" label="Standard"/>
+          </div>
+        </div>
+        <q-separator/>
+        <q-input type="textarea" outlined v-model="text" label="What happens?"/>
+        <q-separator/>
+        <q-uploader class="q-pt-lg"
+                    url="http://localhost:4444/upload"
+                    style="max-width: 300px"
+        />
       </q-card-section>
 
       <q-separator/>
 
       <q-card-actions align="right">
-        <q-btn flat label="Decline" color="primary" v-close-popup/>
-        <q-btn flat label="Accept" color="primary" v-close-popup/>
+        <q-btn flat label="Never Mind" color="secondary" v-close-popup/>
+        <q-btn flat label="Send" color="primary"/>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -29,7 +36,12 @@ export default {
   },
   data () {
     return {
-      fixed: false
+      text: null,
+      model: null,
+      fixed: false,
+      options: [
+        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+      ]
     }
   },
   methods: {},
