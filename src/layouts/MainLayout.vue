@@ -41,6 +41,7 @@
       <q-page-container>
         <q-page padding>
           <router-view/>
+          <HelpFloatingButton/>
         </q-page>
       </q-page-container>
     </q-layout>
@@ -51,9 +52,11 @@ import MessageBox from 'components/MessageBox'
 import LogoutBtn from 'components/LogoutBtn'
 import MainUserMenu from 'components/MainUserMenu'
 import OttoAdminMenu from 'components/OttoAdminMenu'
+import HelpFloatingButton from 'components/help/HelpFloatingButton'
 
 export default {
   components: {
+    HelpFloatingButton,
     OttoAdminMenu,
     LogoutBtn,
     MessageBox,
