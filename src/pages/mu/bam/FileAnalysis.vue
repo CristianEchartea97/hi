@@ -33,8 +33,14 @@ export default {
       progressStr: '0%'
     }
   },
-  methods: {
-    async updateProgress () {
+  methods: {},
+  mounted: function () {
+    const update = async () => {
+      if (this.progress >= 1) {
+        this.progress = 1
+        clearInterval(this.timer)
+      }
+      console.log('update ' + new Date())
       const id = this.$route.params.id
       const progOut = await this.api.get(`/api/mu/job/${id}/status`)
       const response = progOut.data
@@ -42,15 +48,8 @@ export default {
       this.progress = response.data.progress / 100
       this.progressStr = response.data.progress + '%'
     }
-  },
-  mounted: function () {
-    this.timer = setInterval(() => {
-      if (this.progress >= 1) {
-        this.progress = 1
-        clearInterval(this.timer)
-      }
-      this.updateProgress()
-    }, 10000)
+    update()
+    this.timer = setInterval(update, 10000)
   },
   watch: {
     state: async function (newVal, old) {
