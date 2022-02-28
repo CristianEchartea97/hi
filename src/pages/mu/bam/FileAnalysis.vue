@@ -44,7 +44,6 @@ export default {
     }
   },
   mounted: function () {
-    this.updateProgress()
     this.timer = setInterval(() => {
       if (this.progress >= 1) {
         this.progress = 1
