@@ -25,6 +25,29 @@
 </template>
 <script>
 export default {
+  methods: {
+    redirect (page) {
+      if (page === 'FINISHED') {
+        this.$router.push({
+          name: 'viewReport',
+          params: { id: 4 }
+        })
+      } else {
+        this.$router.push({
+          name: 'errorOnReport',
+          params: { id: 13 }
+        })
+      }
+    }
+  },
+  watch: {
+    state: async function (newVal, old) {
+      console.log('old ' + old + ' newVal ' + newVal)
+      if (newVal === 'FAILED' || newVal === 'FINISHED') {
+        this.redirect(newVal)
+      }
+    }
+  },
   data () {
     return {
       state: null,
@@ -33,12 +56,10 @@ export default {
       progressStr: '0%'
     }
   },
-  methods: {},
-  mounted: function () {
+  mounted () {
     const update = async () => {
       if (this.progress >= 1) {
         this.progress = 1
-        clearInterval(this.timer)
       }
       console.log('update ' + new Date())
       const id = this.$route.params.id
@@ -51,26 +72,8 @@ export default {
     update()
     this.timer = setInterval(update, 10000)
   },
-  watch: {
-    state: async function (newVal, old) {
-      console.log('old ' + old + ' newVal ' + newVal)
-      if (newVal === 'FINISHED') {
-        console.log('The jobs analysis has finished')
-        // get report id
-        await this.$router.push({
-          name: 'viewReport',
-          params: { id: 'xxx' }
-        })
-      }
-      if (newVal === 'FAILED') {
-        // redirect to errors page
-        console.log('The jobs analysis has finished')
-        await this.$router.push({
-          name: 'errorOnReport',
-          params: { id: 'xxx' }
-        })
-      }
-    }
+  beforeUnmount () {
+    clearInterval(this.timer)
   }
 }
 </script>

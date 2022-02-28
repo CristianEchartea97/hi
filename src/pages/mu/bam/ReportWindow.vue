@@ -1,14 +1,8 @@
 <template>
-  <div class="h-3">
+  <div>
     This is your data
   </div>
 </template>
 <script>
-export default {
-  data () {
-    return {}
-  },
-  methods: {},
-  mounted: {}
-}
+export default {}
 </script>

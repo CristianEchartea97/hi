@@ -1,5 +1,5 @@
 <template>
-  <div class="h-3">
+  <div>
     Error
   </div>
 </template>
@@ -7,8 +7,6 @@
 export default {
   data () {
     return {}
-  },
-  methods: {},
-  mounted: {}
+  }
 }
 </script>
