@@ -10,7 +10,7 @@ yarn or npm install
 
 Configure the backend API
 
-    cp .quasar.env.json.example quasar.env.json
+    cp .quasar.env.json.example .quasar.env.json
     # user the file with the appropriate information
 
 to whatever the new back-end is hosted, for now there is no support for `.env` properties (WIP)
