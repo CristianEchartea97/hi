@@ -51,7 +51,7 @@ export default {
         clearInterval(this.timer)
       }
       this.updateProgress()
-    }, 5000)
+    }, 10000)
   },
   watch: {
     state: async function (newVal, old) {
