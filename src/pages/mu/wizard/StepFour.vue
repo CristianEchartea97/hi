@@ -112,11 +112,8 @@ export default {
     },
     updateProgress (progressEvent) {
       const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-      console.log('percentage' + percentage)
       this.progressLabel = percentage + ' %'
-      const progressBar = percentage / 100
-      console.log('progressBar' + progressBar)
-      this.progress = progressBar
+      this.progress = percentage / 100
     }
   }
 }

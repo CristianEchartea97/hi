@@ -55,6 +55,18 @@ const routes = [
         name: 'jobAnalysis',
         component: () => import('pages/mu/bam/FileAnalysis'),
         props: true
+      },
+      {
+        path: 'report/:id',
+        name: 'viewReport',
+        component: () => import('pages/mu/bam/ReportWindow'),
+        props: true
+      },
+      {
+        path: 'report-error/:id',
+        name: 'errorOnReport',
+        component: () => import('pages/mu/bam/ErrorOnAnalysis'),
+        props: true
       }
     ]
   },

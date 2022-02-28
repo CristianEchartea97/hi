@@ -19,7 +19,7 @@
       </q-linear-progress>
     </div>
     <div class="col">
-      In_PROGRESS
+      {{ state }}
     </div>
   </div>
 </template>
@@ -27,21 +27,52 @@
 export default {
   data () {
     return {
+      state: null,
       timer: null,
       progress: 0.0,
       progressStr: '0%'
     }
   },
-  methods: {},
+  methods: {
+    async updateProgress () {
+      const id = this.$route.params.id
+      const progOut = await this.api.get(`/api/mu/job/${id}/status`)
+      const response = progOut.data
+      this.state = response.data.status
+      this.progress = response.data.progress / 100
+      this.progressStr = response.data.progress + '%'
+    }
+  },
   mounted: function () {
+    this.updateProgress()
     this.timer = setInterval(() => {
       if (this.progress >= 1) {
         this.progress = 1
         clearInterval(this.timer)
       }
-      this.progress += 0.003
-      this.progressStr = (Math.round(this.progress * 100)) + '%'
-    }, 1000)
+      this.updateProgress()
+    }, 5000)
+  },
+  watch: {
+    state: async function (newVal, old) {
+      console.log('old ' + old + ' newVal ' + newVal)
+      if (newVal === 'FINISHED') {
+        console.log('The jobs analysis has finished')
+        // get report id
+        await this.$router.push({
+          name: 'viewReport',
+          params: { id: 'xxx' }
+        })
+      }
+      if (newVal === 'FAILED') {
+        // redirect to errors page
+        console.log('The jobs analysis has finished')
+        await this.$router.push({
+          name: 'errorOnReport',
+          params: { id: 'xxx' }
+        })
+      }
+    }
   }
 }
 </script>
