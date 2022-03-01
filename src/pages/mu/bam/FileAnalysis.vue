@@ -30,12 +30,12 @@ export default {
       if (page === 'FINISHED') {
         this.$router.push({
           name: 'viewReport',
-          params: { id: 4 }
+          params: { id: this.docId }
         })
       } else {
         this.$router.push({
           name: 'errorOnReport',
-          params: { id: 13 }
+          params: { id: this.docId }
         })
       }
     }
@@ -50,6 +50,7 @@ export default {
   },
   data () {
     return {
+      docId: null,
       state: null,
       timer: null,
       progress: 0.0,
@@ -66,6 +67,7 @@ export default {
       const progOut = await this.api.get(`/api/mu/job/${id}/status`)
       const response = progOut.data
       this.state = response.data.status
+      this.docId = response.data.docId
       this.progress = response.data.progress / 100
       this.progressStr = response.data.progress + '%'
     }
