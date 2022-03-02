@@ -1,80 +1,74 @@
 <template>
-  <q-table
-    :rows="rows"
-    :columns="columns"
-    row-key="id"
-  >
-    <template #top>
-      <div class="text-bold">
-        My statements
-      </div>
-    </template>
-    <template #body-cell="props">
-      <q-td
-        :props="props"
-      >
-        <q-btn
-          flat
-          color="primary"
-          :label="props.value"
-          @click="copyToClipboard(props.value)"
-        />
-      </q-td>
-    </template>
-  </q-table>
+  <div>
+    <q-table
+      title="Reports"
+      :rows="rows"
+      :columns="columns"
+      :filter="filter"
+      :loading="loading"
+      @row-click="goToReport"
+    >
+      <template v-slot:top-right>
+        <q-input class="q-pa-md" borderless dense debounce="300" v-model="filter" placeholder="Search">
+          <template v-slot:append>
+            <q-icon name="search"/>
+          </template>
+        </q-input>
+      </template>
+    </q-table>
+  </div>
 </template>
 <script>
-import { copyToClipboard } from 'quasar'
-
-const rows = [
-  {
-    id: 1,
-    name: 'Britney',
-    email: 'britney@freebritney.com',
-    details: 'button'
-  },
-  {
-    id: 2,
-    name: 'Selena Gomez',
-    email: 'selena@selenag.com',
-    details: 'button'
-  },
-  {
-    id: 3,
-    name: 'Rebeca G',
-    email: 'beckyg@rebecagar.com',
-    details: 'button'
-  }
-]
-
-const columns = [
-  {
-    label: 'Artist name',
-    field: 'name',
-    name: 'name',
-    align: 'center'
-  },
-  {
-    label: 'Email',
-    field: 'email',
-    name: 'email',
-    align: 'center'
-  },
-  {
-    label: 'Details',
-    field: 'details',
-    name: 'details',
-    align: 'right'
-  }
-]
 
 export default {
   data () {
     return {
-      copyToClipboard,
-      rows,
-      columns
+      loading: true,
+      filter: null,
+      rows: [],
+      columns: [
+        {
+          name: 'jobId',
+          required: true,
+          label: 'job',
+          align: 'center',
+          field: row => row.jobId
+        },
+        {
+          name: 'state',
+          required: true,
+          label: 'state',
+          align: 'center',
+          field: row => row.state
+        },
+        {
+          name: 'docName',
+          required: true,
+          label: 'Name',
+          align: 'center',
+          field: row => row.docName
+        }
+      ]
     }
+  },
+  methods: {
+    async loadReports () {
+      this.loading = true
+      const repOut = await this.api.get('/api/mu/all/reports')
+      const response = repOut.data
+      this.rows = response.data
+      this.loading = false
+    },
+    goToReport (evt, row, index) {
+      console.log('index ' + row.docId)
+      this.$router.push({
+        name: 'viewReport',
+        params: { id: row.docId }
+      })
+    }
+  },
+  mounted () {
+    this.loadReports()
   }
 }
 </script>
