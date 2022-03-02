@@ -1,7 +1,14 @@
 <template>
-  <div>
+  <div v-if="!rendering">
     <bar-chart v-if="barChart.renderBar" :chartData="barChart.chartData" :options="barChart.options"/>
     <bar-chart v-if="barChart2.renderBar" :chartData="barChart2.chartData" :options="barChart2.options"/>
+  </div>
+  <div v-else>
+    <div class="row justify-center">
+      <div class="col-12 col-md-auto">
+        <q-spinner-audio size="5rem" color="secondary"/>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -17,6 +24,7 @@ export default {
   },
   data () {
     return {
+      rendering: true,
       barChart: {
         renderBar: false,
         chartData: null,
@@ -34,6 +42,7 @@ export default {
   },
   methods: {
     async getReport () {
+      this.rendering = true
       // https://www.chartjs.org/docs/latest/general/data-structures.html
       const id = this.$route.params.id
       const out = await this.api.get(`/api/mu/report/${id}`)
@@ -63,6 +72,7 @@ export default {
         }
       }
       this.barChart2.renderBar = true
+      this.rendering = false
     }
   }
 }
