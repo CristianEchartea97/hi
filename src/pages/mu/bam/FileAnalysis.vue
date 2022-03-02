@@ -62,17 +62,20 @@ export default {
       if (this.progress >= 1) {
         this.progress = 1
       }
-      console.log('update ' + new Date())
       const id = this.$route.params.id
       const progOut = await this.api.get(`/api/mu/job/${id}/status`)
       const response = progOut.data
       this.state = response.data.status
       this.docId = response.data.docId
-      this.progress = response.data.progress / 100
-      this.progressStr = response.data.progress + '%'
+      let tempProgress = response.data.progress
+      if (tempProgress > 100) {
+        tempProgress = 100
+      }
+      this.progress = tempProgress / 100
+      this.progressStr = tempProgress + '%'
     }
     update()
-    this.timer = setInterval(update, 10000)
+    this.timer = setInterval(update, 3000)
   },
   beforeUnmount () {
     clearInterval(this.timer)
