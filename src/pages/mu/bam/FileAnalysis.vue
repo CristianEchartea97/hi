@@ -59,9 +59,6 @@ export default {
   },
   mounted () {
     const update = async () => {
-      if (this.progress >= 1) {
-        this.progress = 1
-      }
       const id = this.$route.params.id
       const progOut = await this.api.get(`/api/mu/job/${id}/status`)
       const response = progOut.data
